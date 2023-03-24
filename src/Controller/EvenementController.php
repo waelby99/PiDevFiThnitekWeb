@@ -16,20 +16,12 @@ class EvenementController extends AbstractController
     {
         $repo = $doctrine->getRepository(Evenement::class);
         $Events = $repo->findAll();
+
         return $this->render('evenement/index.html.twig', [
             'controller_name' => 'EvenementController',
             'events'=>$Events
         ]);
     }
 
-    /*#[Route('/listeclassroom', name: 'app_classroom')]
-    public function list(ManagerRegistry $doctrine): Response
-    {
-        $repo = $doctrine->getRepository(Classroom::class);
-        $classrooms = $repo->findAll();
-        return $this->render('classroom/index.html.twig', [
-            'controller_name' => 'ClassroomController',
-            'classrooms'=>$classrooms
-        ]);
-    }*/
+
 }
