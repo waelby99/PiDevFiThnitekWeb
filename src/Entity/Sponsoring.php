@@ -24,8 +24,8 @@ class Sponsoring
     #[ORM\Column(length: 255)]
     private ?string $adresse=null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $datesignature=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $datesignature=null;
 
     #[ORM\Column(length: 255)]
     private ?string $email=null;
@@ -71,12 +71,12 @@ class Sponsoring
         return $this;
     }
 
-    public function getDatesignature(): ?\DateTimeInterface
+    public function getDatesignature(): ?\DateTime
     {
         return $this->datesignature;
     }
 
-    public function setDatesignature(\DateTimeInterface $datesignature): self
+    public function setDatesignature(\DateTime $datesignature): self
     {
         $this->datesignature = $datesignature;
 

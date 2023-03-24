@@ -4,7 +4,6 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
 use App\Repository\EvenementRepository;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
@@ -18,8 +17,8 @@ class Evenement
     #[ORM\Column(length: 50)]
     private ?string $lieu = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $date=null;
 
     #[ORM\Column(length: 50)]
     private ?string $titre=null;
@@ -47,12 +46,12 @@ class Evenement
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(\DateTime $date): self
     {
         $this->date = $date;
 

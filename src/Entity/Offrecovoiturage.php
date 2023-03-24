@@ -4,7 +4,7 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
+
 use App\Repository\OffrecovoiturageRepository;
 
 #[ORM\Entity(repositoryClass: OffrecovoiturageRepository::class)]
@@ -21,8 +21,8 @@ class Offrecovoiturage
     #[ORM\Column(length: 50)]
     private ?string $marque=null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dated=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $dated=null;
 
     #[ORM\Column(length: 50)]
     private ?string $lieud=null;
@@ -74,12 +74,12 @@ class Offrecovoiturage
         return $this;
     }
 
-    public function getDated(): ?\DateTimeInterface
+    public function getDated(): ?\DateTime
     {
         return $this->dated;
     }
 
-    public function setDated(\DateTimeInterface $dated): self
+    public function setDated(\DateTime $dated): self
     {
         $this->dated = $dated;
 
