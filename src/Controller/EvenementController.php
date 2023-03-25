@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Evenement;
-use App\Entity\Sponsoring;
 use App\Form\EvenementType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +18,6 @@ class EvenementController extends AbstractController
     {
         $repo = $doctrine->getRepository(Evenement::class);
         $Events = $repo->findAll();
-
         return $this->render('evenement/index.html.twig', [
             'controller_name' => 'EvenementController',
             'events'=>$Events
