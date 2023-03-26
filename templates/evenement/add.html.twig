@@ -1,6 +1,6 @@
 {% extends "fix.html.twig" %}
 {% block content %}
-    {{ form_start(form) }}
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
     <div class="container-fluid">
         <center style="margin-top:20px;margin-bottom:20px"><h3 class="d-inline" style="color:#7571f9;">Ajouter un événement</h3></center>
         <div class="row justify-content-center">
