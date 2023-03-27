@@ -27,7 +27,7 @@ class Evenement
     private ?string $description=null;
 
     #[ORM\Column]
-    private ?int $nbparticipants=null;
+    private ?int $nbparticipants=0;
 
     public function getId(): ?int
     {
