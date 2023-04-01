@@ -1,0 +1,12 @@
+{% extends 'fix.html.twig' %}
+
+
+{% block content %}
+    <h1>Edit Bien</h1>
+
+    {{ include('bien/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_bien_index') }}">back to list</a>
+
+    {{ include('bien/_delete_form.html.twig') }}
+{% endblock %}

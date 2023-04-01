@@ -1,0 +1,10 @@
+{% extends 'fix.html.twig' %}
+
+
+{% block content %}
+    <h1>Create new Offrecovoiturage</h1>
+
+    {{ include('offrecovoiturage/_form.html.twig') }}
+
+    <a href="{{ path('app_offrecovoiturage_index') }}">back to list</a>
+{% endblock %}
