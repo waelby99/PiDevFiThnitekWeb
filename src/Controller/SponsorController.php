@@ -5,12 +5,14 @@ namespace App\Controller;
 
 use App\Entity\Sponsoring;
 use App\Form\SponsorType;
+use App\Repository\SponsoringRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class SponsorController extends AbstractController
 {
@@ -71,5 +73,16 @@ class SponsorController extends AbstractController
             'sponsor'=>$sponsor,
             'events'=>$evenments
         ]);
+    }
+
+    #[Route('/searchSponsorx', name:'searchSponsor')]
+    public function searchSponsor(Request $request,ManagerRegistry $doctrine,NormalizerInterface $Normalizer,SponsoringRepository $sr)
+    {
+
+        $requestString=$request->get('searchValue');
+        $sponsorings=$sr->getSponsorbyNom($requestString);
+        $jsonContent = $Normalizer->normalize($sponsorings,'json',['groups'=>'sponsorings']);
+        $retour=json_encode($jsonContent);
+        return new Response($retour);
     }
 }
