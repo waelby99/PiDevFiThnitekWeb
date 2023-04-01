@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Sponsoring;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,6 +38,7 @@ class SponsoringRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
     public function getEvenementBySponsorId(EntityManagerInterface $entityManager, int $sponsorId): array
     {
         $queryBuilder = $entityManager->createQueryBuilder();
@@ -51,6 +51,13 @@ class SponsoringRepository extends ServiceEntityRepository
             ->setParameter('sponsorId', $sponsorId);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+    public function getSponsorbyNom($sponsor){
+        return $this->createQueryBuilder('sponsoring')
+            ->where('sponsoring.sponsor LIKE :sponsor')
+            ->setParameter('sponsor', '%'.$sponsor.'%')
+            ->getQuery()
+            ->getResult();
     }
 //    /**
 //     * @return Sponsoring[] Returns an array of Sponsoring objects
