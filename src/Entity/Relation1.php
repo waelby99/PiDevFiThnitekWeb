@@ -14,10 +14,12 @@ class Relation1
     private ?int $idRelation= null;
 
     #[ORM\ManyToOne(inversedBy: 'sponsors')]
-    private ?Sponsoring $idSponsor=null;
+    #[ORM\JoinColumn(name: 'id_sponsor')]
+    private ?Sponsoring $id_sponsor=null;
 
     #[ORM\ManyToOne(inversedBy: 'evenements')]
-    private ?Evenement $idEvenement=null;
+    #[ORM\JoinColumn(name: 'id_evenement')]
+    private ?Evenement $id_evenement=null;
 
     public function getIdRelation(): ?int
     {
@@ -26,24 +28,24 @@ class Relation1
 
     public function getIdSponsor(): ?Sponsoring
     {
-        return $this->idSponsor;
+        return $this->id_sponsor;
     }
 
-    public function setIdSponsor(?Sponsoring $idSponsor): self
+    public function setIdSponsor(?Sponsoring $id_sponsor): self
     {
-        $this->idSponsor = $idSponsor;
+        $this->id_sponsor = $id_sponsor;
 
         return $this;
     }
 
     public function getIdEvenement(): ?Evenement
     {
-        return $this->idEvenement;
+        return $this->id_evenement;
     }
 
-    public function setIdEvenement(?Evenement $idEvenement): self
+    public function setIdEvenement(?Evenement $id_evenement): self
     {
-        $this->idEvenement = $idEvenement;
+        $this->id_evenement = $id_evenement;
 
         return $this;
     }

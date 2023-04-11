@@ -4,7 +4,7 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
+
 use App\Repository\VoitureRepository;
 
 #[ORM\Entity(repositoryClass: VoitureRepository::class)]
@@ -27,11 +27,11 @@ class Voiture
     #[ORM\Column]
     private ?int $nbplaces=null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateassurance=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $dateassurance=null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $datedvidange=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $datedvidange=null;
 
     #[ORM\Column(length: 255)]
     private ?string $color=null;
@@ -95,24 +95,24 @@ class Voiture
         return $this;
     }
 
-    public function getDateassurance(): ?\DateTimeInterface
+    public function getDateassurance(): ?\DateTimeI
     {
         return $this->dateassurance;
     }
 
-    public function setDateassurance(\DateTimeInterface $dateassurance): self
+    public function setDateassurance(\DateTime $dateassurance): self
     {
         $this->dateassurance = $dateassurance;
 
         return $this;
     }
 
-    public function getDatedvidange(): ?\DateTimeInterface
+    public function getDatedvidange(): ?\DateTime
     {
         return $this->datedvidange;
     }
 
-    public function setDatedvidange(\DateTimeInterface $datedvidange): self
+    public function setDatedvidange(\DateTime $datedvidange): self
     {
         $this->datedvidange = $datedvidange;
 

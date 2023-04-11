@@ -4,7 +4,6 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
 use App\Repository\MaintenanceRepository;
 
 #[ORM\Entity(repositoryClass: MaintenanceRepository::class)]
@@ -19,14 +18,14 @@ class Maintenance
     private ?string $matricule=null;
     
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $datedassurance=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $datedassurance=null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $datepassurance=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $datepassurance=null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $datedvidange=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $datedvidange=null;
 
     #[ORM\Column]
     private ?int $restekilometre=null;
@@ -48,36 +47,36 @@ class Maintenance
         return $this;
     }
 
-    public function getDatedassurance(): ?\DateTimeInterface
+    public function getDatedassurance(): ?\DateTime
     {
         return $this->datedassurance;
     }
 
-    public function setDatedassurance(\DateTimeInterface $datedassurance): self
+    public function setDatedassurance(\DateTime $datedassurance): self
     {
         $this->datedassurance = $datedassurance;
 
         return $this;
     }
 
-    public function getDatepassurance(): ?\DateTimeInterface
+    public function getDatepassurance(): ?\DateTime
     {
         return $this->datepassurance;
     }
 
-    public function setDatepassurance(\DateTimeInterface $datepassurance): self
+    public function setDatepassurance(\DateTime $datepassurance): self
     {
         $this->datepassurance = $datepassurance;
 
         return $this;
     }
 
-    public function getDatedvidange(): ?\DateTimeInterface
+    public function getDatedvidange(): ?\DateTime
     {
         return $this->datedvidange;
     }
 
-    public function setDatedvidange(\DateTimeInterface $datedvidange): self
+    public function setDatedvidange(\DateTime $datedvidange): self
     {
         $this->datedvidange = $datedvidange;
 

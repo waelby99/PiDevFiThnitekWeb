@@ -20,8 +20,8 @@ class Bien
     #[ORM\Column(length: 50)]
     private ?string $lieua=null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dated=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $dated=null;
     
 
     #[ORM\Column(length: 12)]
@@ -59,12 +59,12 @@ class Bien
         return $this;
     }
 
-    public function getDated(): ?int
+    public function getDated(): ?\DateTime
     {
         return $this->dated;
     }
 
-    public function setDated(int $dated): self
+    public function setDated(\DateTime $dated): self
     {
         $this->dated = $dated;
 
