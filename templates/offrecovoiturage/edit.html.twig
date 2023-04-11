@@ -1,0 +1,12 @@
+{% extends 'fix.html.twig' %}
+
+
+{% block content %}
+    <h1>Edit Offrecovoiturage</h1>
+
+    {{ include('offrecovoiturage/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_offrecovoiturage_index') }}">back to list</a>
+
+
+{% endblock %}

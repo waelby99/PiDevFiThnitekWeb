@@ -1,0 +1,64 @@
+{% extends 'fix.html.twig' %}
+{% block content %}
+    <div class="content-body" style="margin-left:-5px">
+        <center style="margin-top:20px;margin-bottom:20px"><h3 class="d-inline" style="color:#7571f9;">Liste des Sponsors
+                <a href='{{path('add_sponsor')}}' class="btn mb-1 btn-info float-right" style="margin-right: 20px"><i class="mdi mdi-plus"></i><span> Ajouter un sponsor</span></a>
+            </h3></center>
+
+        <div class="card" style="margin-left: 20px;margin-right: 20px">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table header-border" id="tableac">
+                        <input class="form-control form-control-sm ml-10 w-30" id="search" type="text" placeholder="Search" aria-label="Search">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom du sponsor</th>
+                            <th>Email</th>
+                            <th>Adresse</th>
+                            <th>Date de Signature</th>
+                            <th>Montant</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="all">
+                        {% for s in sponsors %}
+                        <tr class="table-primary">
+                            <td>{{ s.id}}</td>
+                            <td>{{ s.sponsor }}</td>
+                            <td>{{ s.email }}</td>
+                            <td>{{ s.adresse }}</td>
+                            <td>{{ s.dateSignature.format('Y-m-d') }}</td>
+                            <td>{{ s.montant }} DT</td>
+                            <td>
+                                <a href='{{path('modif_sponsor',{'id':s.id})}}' data-toggle="tooltip" data-placement="top"  data-original-title="Mofifier"><i class="fa fa-pencil color-muted m-r-5"></i> </a>
+                                <a href='{{path('delete_sponsor',{'id':s.id})}}' data-toggle="tooltip" data-placement="top"  data-original-title="Supprimer"><i class="fa fa-trash color-danger"></i></a>
+                                <a href='{{path('detail_sponsor',{'id':s.id})}}' data-toggle="tooltip" data-placement="top"  data-original-title="Détails"><i class="fa fa-info color-danger"></i></a>
+                            </td>
+                        </tr>
+
+{% endfor %}
+                        </tbody>
+                        <tbody id="searchtab">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#search').on('keyup', function() {
+                var value = $(this).val().toLowerCase();
+                $('#table tbody tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+    </script>
+
+{% endblock %}

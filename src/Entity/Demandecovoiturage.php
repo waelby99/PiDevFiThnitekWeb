@@ -4,7 +4,6 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
 use App\Repository\DemandecovoiturageRepository;
 
 #[ORM\Entity(repositoryClass: DemandecovoiturageRepository::class)]
@@ -16,8 +15,8 @@ class Demandecovoiturage
     private ?int $id= null;
 
     
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $datereservation=null;
+    #[ORM\Column(length:20)]
+    private ?\DateTime $datereservation=null;
 
     #[ORM\Column]
     private ?int $nbplace=null;
@@ -33,12 +32,12 @@ class Demandecovoiturage
         return $this->id;
     }
 
-    public function getDatereservation(): ?\DateTimeInterface
+    public function getDatereservation(): ?\DateTime
     {
         return $this->datereservation;
     }
 
-    public function setDatereservation(\DateTimeInterface $datereservation): self
+    public function setDatereservation(\DateTime $datereservation): self
     {
         $this->datereservation = $datereservation;
 
