@@ -1,0 +1,10 @@
+{% extends 'fix.html.twig' %}
+
+
+{% block content %}
+    <h1>Create new Bien</h1>
+
+    {{ include('bien/_form.html.twig') }}
+
+    <a href="{{ path('app_bien_index') }}">back to list</a>
+{% endblock %}

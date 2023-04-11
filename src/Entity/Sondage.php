@@ -8,28 +8,16 @@ use App\Repository\SondageRepository;
 #[ORM\Entity(repositoryClass: SondageRepository::class)]
 class Sondage
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="sondage_id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $sondageId;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $sondageId=null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sujet", type="string", length=20, nullable=false)
-     */
-    private $sujet;
+    #[ORM\Column(length: 20)]
+    private ?string $sujet=null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="catégorie", type="string", length=20, nullable=false)
-     */
-    private $catégorie;
+    #[ORM\Column(length: 20)]
+    private ?string $catégorie=null;
 
 
 }
