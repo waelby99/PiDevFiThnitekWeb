@@ -1,0 +1,55 @@
+{% extends 'fix.html.twig' %}
+
+{% block content %}
+
+
+    <div class="content-body" style="margin-left:-5px">
+        <center style="margin-top:20px;margin-bottom:20px"><h3 class="d-inline" style="color:#7571f9;">Liste des offres de Covoiturages
+                <a href="{{path('app_offrecovoiturage_new')}}" class="btn mb-1 btn-info float-right" style="margin-right: 20px"><i class="mdi mdi-plus"></i><span> Ajouter un offre</span></a>
+            </h3></center>
+
+        <div class="card" style="margin:20px">
+            <div class="card-body">
+                <h4 class="card-title">Basic Table</h4>
+                <div class="table-responsive">
+                    <table class="table header-border">
+                        <thead>
+                        <tr>
+                            <th scope="col">Lieu depart</th>
+                            <th scope="col">Lieu arriver</th>
+                            <th scope="col">Date depart</th>
+                            <th scope="col">telephone</th>
+                            <th scope="col">Demandeur</th>
+                            <th scope="col">Actions </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for o in offres %}
+
+
+
+                            <tr>
+
+                                <td>{{ o.lieud }}</td>
+                                <td>{{ o.lieua }}</td>
+                                <td>{{ o.dated.format('Y-m-d') }}</td>
+                                <td>{{ o.num }}</td>
+                                <td>{{ o.idUser.nom }}</td>
+                                <td>
+                                    <a class="btn btn-primary" style="margin-left:5px" href="{{path('app_bien_edit',{'id':o.id})}}"><i class="fa fa-pencil color-muted m-r-5"></i></a>
+                                    <a class="btn btn-primary" style="margin-left:5px" href="{{path('app_bien_delete',{'id':o.id})}}"><i class="fa fa-close color-danger"></i></a>
+                                    <a class="btn btn-primary" style="margin-left:5px" href="{{path('app_bien_show',{'id':o.id})}}">detail</a>
+                                    <a class="btn btn-primary" style="margin-left:5px" href="#">avis</a>
+                                    <a class="btn btn-primary" href="#">part.</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
