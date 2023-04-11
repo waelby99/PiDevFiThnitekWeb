@@ -28,6 +28,7 @@ class Bien
     private ?string $num=null;
 
     #[ORM\ManyToOne(inversedBy:'biens')]
+    #[ORM\JoinColumn(name: 'idUser')]
     private ?User $iduser = null;
 
     public function getId(): ?int

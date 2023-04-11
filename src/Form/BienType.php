@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Bien;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +18,10 @@ class BienType extends AbstractType
             ->add('lieua')
             ->add('dated')
             ->add('num')
-            ->add('iduser')
+            ->add('iduser',EntityType::class,
+                ['class'=>User::class,
+                    'choice_label'=>'nom',
+                    'label'=>'User'])
         ;
     }
 

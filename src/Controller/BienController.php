@@ -9,6 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 #[Route('/bien')]
 class BienController extends AbstractController
@@ -17,7 +20,7 @@ class BienController extends AbstractController
     public function index(BienRepository $bienRepository): Response
     {
         return $this->render('bien/index.html.twig', [
-            'biens' => $bienRepository->findAll(),
+            'offres' => $bienRepository->findAll(),
         ]);
     }
 
