@@ -19,8 +19,14 @@ class Reclamation
     #[ORM\Column(length: 500)]
     private ?string $contenu=null;
 
+    
     #[ORM\ManyToOne(inversedBy:'demandecovoiturages')]
+    #[ORM\JoinColumn(name: 'idUser')]
     private ?User $iduser = null;
+
+    #[ORM\Column(length: 2550)]
+    public ?string $image = null;
+
 
     public function getId(): ?int
     {
@@ -62,6 +68,19 @@ class Reclamation
 
         return $this;
     }
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    
 
 
 }

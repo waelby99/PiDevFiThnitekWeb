@@ -13,14 +13,17 @@ class Avis
     #[ORM\Column]
     private ?int $id=null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $commenraire = null;
-
-    #[ORM\ManyToOne(inversedBy:'aviss')]
-    private ?User $idUser = null;
+    #[ORM\ManyToOne(inversedBy: 'avisss')]
+    #[ORM\JoinColumn(name: 'idUser')]
+    private ?User $iduser = null;
 
     #[ORM\ManyToOne(inversedBy: 'avisss')]
-    private ?Offrecovoiturage $idOffrecov=null;
+    #[ORM\JoinColumn(name: 'id_offrecov')]
+    public ?Offrecovoiturage $id_offrecov = null;
+
+    #[ORM\Column(length: 255)]
+    #[ORM\JoinColumn(name: 'commenraire')]
+    private ?string $commenraire = null;
 
     public function getId(): ?int
     {
@@ -39,26 +42,26 @@ class Avis
         return $this;
     }
 
-    public function getIdUser(): ?User
+   public function getIduser(): ?User
     {
-        return $this->idUser;
+        return $this->iduser;
     }
 
-    public function setIdUser(?User $idUser): self
+    public function setIduser(?User $iduser): self
     {
-        $this->idUser = $idUser;
+        $this->iduser = $iduser;
 
         return $this;
     }
 
-    public function getIdOffrecov(): ?Offrecovoiturage
+    public function getId_offrecov(): ?Offrecovoiturage
     {
-        return $this->idOffrecov;
+        return $this->id_offrecov;
     }
 
-    public function setIdOffrecov(?Offrecovoiturage $idOffrecov): self
+    public function setId_offrecov(?Offrecovoiturage $id_offrecov): self
     {
-        $this->idOffrecov = $idOffrecov;
+        $this->id_offrecov = $id_offrecov;
 
         return $this;
     }
