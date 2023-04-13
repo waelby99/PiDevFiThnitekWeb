@@ -2,31 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Evenement;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use App\Entity\Bien;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EvenementType extends AbstractType
+class BienType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('lieu')
-            ->add('date', DateType::class, [
-                'widget' => 'single_text',
-            ])
-            ->add('titre')
-            ->add('description')
-           // ->add('nbparticipants')
+            ->add('lieud')
+            ->add('lieua')
+            ->add('dated')
+            ->add('num')
+            ->add('iduser')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Evenement::class,
+            'data_class' => Bien::class,
         ]);
     }
 }

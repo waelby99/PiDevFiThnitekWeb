@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Evenement;
+use App\Entity\Sponsoring;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +39,19 @@ class EvenementRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function getSponsorByEvenementId(EntityManagerInterface $entityManager, int $evenementId): array
+    {
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        $queryBuilder->select('s')
+            ->from('App\Entity\Sponsoring', 's')
+            ->join('App\Entity\Relation1', 'r', 'WITH', 'r.id_sponsor = s.id')
+            ->join('App\Entity\Evenement', 'e', 'WITH', 'r.id_evenement = e.id')
+            ->where('e.id = :evenementId')
+            ->setParameter('evenementId', $evenementId);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
 //    /**
