@@ -39,6 +39,15 @@ class AvisRepository extends ServiceEntityRepository
         }
     }
 
+    public function searchByQuery($query)
+    {
+    return $this->createQueryBuilder('a')
+        ->where('a.commenraire LIKE :query')
+        ->setParameter('query', '%'.$query.'%')
+        ->getQuery()
+        ->getResult();
+   }
+
 //    /**
 //     * @return Avis[] Returns an array of Avis objects
 //     */

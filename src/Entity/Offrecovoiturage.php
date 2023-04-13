@@ -43,7 +43,6 @@ class Offrecovoiturage
     private ?float $distance=null;
 
     #[ORM\ManyToOne(inversedBy:'demandecovoiturages')]
-    #[ORM\JoinColumn(name: 'idUser')]
     private ?User $iduser = null;
 
     public function getId(): ?int

@@ -38,6 +38,15 @@ class ReclamationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function searchByQuery($query)
+    {
+    return $this->createQueryBuilder('r')
+        ->where('r.intitule LIKE :query')
+        ->orWhere('r.contenu LIKE :query')
+        ->setParameter('query', '%'.$query.'%')
+        ->getQuery()
+        ->getResult();
+   }
 
 //    /**
 //     * @return Reclamation[] Returns an array of Reclamation objects

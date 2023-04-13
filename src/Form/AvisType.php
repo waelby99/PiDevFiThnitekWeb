@@ -9,6 +9,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\User;
 use App\Entity\Offrecovoiturage;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class AvisType extends AbstractType
 {
@@ -24,18 +28,7 @@ class AvisType extends AbstractType
             ['class'=>Offrecovoiturage::class,
             'choice_label'=>'marque',
             'label'=>'offrecovoiturage'])
-            ->add('image',FileType::class,[
-                'label' => 'image',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '2Mi',
-                        'mimeTypesMessage' => 'Télécharger une image valide',
-                    ])
-                ],
-          
-            ])
+            
         ;
     }
 

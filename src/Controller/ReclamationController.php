@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\ReclamationRepository;
 
 class ReclamationController extends AbstractController
 {
@@ -114,5 +115,35 @@ class ReclamationController extends AbstractController
         $rec->remove($reclamation);
         $rec->flush();
         return $this->redirectToRoute('app_reclamation');
+    }
+    #[Route('/search', name: 'search_reclamation')]
+    public function search(Request $request, ManagerRegistry $doctrine): Response
+    {
+         $repo = $doctrine->getRepository(Reclamation::class);
+         $query = $request->query->get('query');
+
+        if (!$query) {
+        $Reclamations = $repo->findAll();
+        } else {
+        $Reclamations = $repo->searchByQuery($query);
+    }
+
+    return $this->render('reclamation/index.html.twig', [
+        'controller_name' => 'ReclamationController',
+        'Reclamations'=>$Reclamations
+    ]);
+}
+
+
+    #[Route('/reclamationAdmin', name: 'app_reclamationAdmin')]
+    public function indexAdmin(ManagerRegistry $doctrine): Response
+    {
+        $repo = $doctrine->getRepository(Reclamation::class);
+        $Reclamations = $repo->findAll();
+
+        return $this->render('reclamation/consulterAdmin.html.twig', [
+            'controller_name' => 'ReclamationController',
+            'Reclamations'=>$Reclamations
+        ]);
     }
 }

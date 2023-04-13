@@ -21,5 +21,12 @@ class HomeController extends AbstractController
         return $this->render('home/afterlogin.html.twig', [     
         ]);
     }
+
+    #[Route('/afterloginAdmin', name: 'app_afterloginAdmin')]
+    public function logedinAdmin(): Response
+    {
+        return $this->render('home/afterloginAdmin.html.twig', [     
+        ]);
+    }
     
 }

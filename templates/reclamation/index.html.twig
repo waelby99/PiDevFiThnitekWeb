@@ -1,17 +1,27 @@
 {% extends 'fix.html.twig' %}
 
 {% block content %}
-    <div class="content-body" style="margin-left:-5px">
-        <center style="margin-top:20px;margin-bottom:20px;margin-left:250px"><h3 class="d-inline" style="color:#7571f9;">Liste des réclamations
+            
+           <div class="content-body" style="margin-left:-5px">
+                <center style="margin-top:20px;margin-bottom:20px;margin-left:250px"><h1 class="d-inline" style="color:#7571f9;">Liste des réclamations
                 <a href='{{path('add_reclamation')}}' class="btn mb-1 btn-info float-right" style="margin-right: 20px"><i class="mdi mdi-plus"></i><span> Ajouter une réclamation</span></a>
-            </h3></center>
+                </h1></center>
+            <center>    
+            <div  style=" width:300px;">
+                <form method="get" action='{{ path('search_reclamation') }}'>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="query" placeholder="Rechercher une reclamation">
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </div>
+              </form>
+            </div>
+           </center>
 
-     <div class="col-lg-6" style="margin-left:200px;margin-right:200px">
-                        <div class="card" style="margin-top:40px;margin-bottom:20px;margin-left:70px;margin-right:-300px" >
+            <div class="col-lg-6" style="margin-left:250px">
+       
+                        <div class="card" style="margin-top:20px;margin-bottom:20px;margin-left:50px;margin-right:-200px" >
                             <div class="card-body" >
-                                <div class="card-title">
-                                    <h4></h4>
-                                </div>
+                                
                                 <div class="table-responsive" >
                                     <table class="table table-striped">
                                         <thead>

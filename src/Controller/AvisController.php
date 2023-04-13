@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Avis;
 use App\Form\AvisType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\AvisRepository;
 
 
 class AvisController extends AbstractController
@@ -76,5 +77,35 @@ class AvisController extends AbstractController
         $av->remove($avis);
         $av->flush();
         return $this->redirectToRoute('app_avis');
+    }
+
+    #[Route('/searchAvis', name: 'search_avis')]
+    public function search(Request $request, ManagerRegistry $doctrine): Response
+    {
+         $repo = $doctrine->getRepository(Avis::class);
+         $query = $request->query->get('query');
+
+        if (!$query) {
+        $Avis = $repo->findAll();
+        } else {
+        $Avis = $repo->searchByQuery($query);
+    }
+    return $this->render('avis/index.html.twig', [
+        'controller_name' => 'AvisController',
+        'Avis'=>$Avis
+    ]);
+   }
+
+    #[Route('/avisAdmin', name: 'app_avisAdmin')]
+    public function indexAdmin(ManagerRegistry $doctrine): Response
+    {
+        $repo = $doctrine->getRepository(Avis::class);
+        $Avis = $repo->findAll();
+
+    
+        return $this->render('avis/consulterAdmin.html.twig', [
+            'controller_name' => 'AvisController',
+            'Avis' => $Avis,
+        ]);
     }
 }
