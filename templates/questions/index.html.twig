@@ -1,0 +1,45 @@
+
+{% extends 'fixadmin.html.twig' %}
+
+
+
+{% block body %}
+<div class="body">  
+<div class="tab">
+<div class="tab-header" > <h1> List Des Questions </h1>    <p class="create"> <a href="{{ path('app_questions_new') }}"><button type="button" class="btn btn-primary">Create new</button></a> </p>  </div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Question</th>
+                <th>Type</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                
+                <td>{{ question.question }}</td>
+                <td>{{ question.type }}</td>
+                <td>
+                    <a href="{{ path('app_questions_show', {'questionId': question.questionId}) }}"><button type="button" class="btn btn-primary">show</button></a>
+                    <a href="{{ path('app_questions_edit', {'questionId': question.questionId}) }}"><button type="button" class="btn btn-primary">edit</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>    
+    
+   <div class="create"> <a href="{{ path('app_sondage_index') }}"><button type="button" class="btn btn-primary">BackToList</button></a> </div>
+</div>    
+
+    
+{% endblock %}

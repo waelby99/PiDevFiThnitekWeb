@@ -6,6 +6,10 @@ use App\Entity\Questions;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
+
+
+
 /**
  * @extends ServiceEntityRepository<Questions>
  *
@@ -20,6 +24,20 @@ class QuestionsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Questions::class);
     }
+          /**
+      * @return Questions[] Returns an array of Questions objects
+      */
+    public function findById($id)
+    {
+        return $this->createQueryBuilder('a')
+            -> join ('a.sondage','c')
+            ->addSelect ('c')
+            ->andWhere('c.sondageId = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
 
     public function save(Questions $entity, bool $flush = false): void
     {
@@ -30,6 +48,7 @@ class QuestionsRepository extends ServiceEntityRepository
         }
     }
 
+
     public function remove(Questions $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -38,6 +57,7 @@ class QuestionsRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+   
 
 //    /**
 //     * @return Questions[] Returns an array of Questions objects

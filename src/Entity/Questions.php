@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\QuestionsRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Validator\Constraints\Regex;
 #[ORM\Entity(repositoryClass: QuestionsRepository::class)]
 class Questions
 {
@@ -14,6 +16,9 @@ class Questions
     private ?int $questionId= null;
 
     #[ORM\Column(length: 50)]
+   
+    #[Assert\Regex(pattern: '/\?$/', message: "la question doit se terminer par un point d\'interrogation")]
+
     private ?string $question=null;
 
     #[ORM\Column(length: 20)]
@@ -21,7 +26,11 @@ class Questions
 
     
     #[ORM\ManyToOne(inversedBy:'questions')]
+    #[ORM\JoinColumn(name:'sondage_id')]
+
     private ?Sondage $sondage = null;
+     
+     
 
     public function getQuestionId(): ?int
     {
