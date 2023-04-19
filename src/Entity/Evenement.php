@@ -47,7 +47,7 @@ class Evenement
         return $this->lieu;
     }
 
-    public function setLieu(string $lieu): self
+    public function setLieu(?string $lieu): self
     {
         $this->lieu = $lieu;
 
@@ -59,7 +59,7 @@ class Evenement
         return $this->date;
     }
 
-    public function setDate(\DateTime $date): self
+    public function setDate(?DateTime $date): self
     {
         $this->date = $date;
 
@@ -71,7 +71,7 @@ class Evenement
         return $this->titre;
     }
 
-    public function setTitre(string $titre): self
+    public function setTitre(?string $titre): self
     {
         $this->titre = $titre;
 
@@ -83,7 +83,7 @@ class Evenement
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 

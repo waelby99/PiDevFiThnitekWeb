@@ -24,8 +24,8 @@ class Sponsoring
 
     #[ORM\Column]
     #[Assert\NotNull(message: "Le champ ne peut pas être vide.")]
-    #[Assert\Regex(pattern: '/^[0-9]*$/', message: "Le montant doit contenir uniquement des chiffres.")]
     #[Assert\Range(min: 1, max: 9999, notInRangeMessage: "Le montant doit être compris entre {{ min }} et {{ max }}.")]
+    #[Assert\Regex(pattern: '/^[0-9]*$/', message: "Le montant doit contenir uniquement des chiffres.")]
     private ?float $montant=null;
 
     #[ORM\Column(length: 255)]
@@ -52,7 +52,7 @@ class Sponsoring
         return $this->sponsor;
     }
 
-    public function setSponsor(string $sponsor): self
+    public function setSponsor(?string $sponsor): self
     {
         $this->sponsor = $sponsor;
 
@@ -64,7 +64,7 @@ class Sponsoring
         return $this->montant;
     }
 
-    public function setMontant(float $montant): self
+    public function setMontant(?float $montant): self
     {
         $this->montant = $montant;
 
@@ -76,7 +76,7 @@ class Sponsoring
         return $this->adresse;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
 
@@ -88,7 +88,7 @@ class Sponsoring
         return $this->datesignature;
     }
 
-    public function setDatesignature(\DateTime $datesignature): self
+    public function setDatesignature(?DateTime $datesignature): self
     {
         $this->datesignature = $datesignature;
 
@@ -100,7 +100,7 @@ class Sponsoring
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 

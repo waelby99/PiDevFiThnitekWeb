@@ -1,4 +1,4 @@
-{% extends 'fix.html.twig' %}
+{% extends 'fixadmin.html.twig' %}
 {% block content %}
     <div class="content-body" style="margin-left:-5px">
         <center style="margin-top:20px;margin-bottom:20px"><h3 class="d-inline" style="color:#7571f9;">Liste des Sponsors
@@ -52,12 +52,10 @@
     <script>
         $(document).ready(function() {
             $('#search').on('keyup', function() {
-                var value = $(this).val().toLowerCase();
+                var value = $(this).val();
                 $('#table tbody tr').filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
+                });});});
 
     </script>
 
