@@ -59,7 +59,7 @@ class Evenement
         return $this->date;
     }
 
-    public function setDate(?DateTime $date): self
+    public function setDate(?\DateTime $date): self
     {
         $this->date = $date;
 

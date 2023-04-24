@@ -1,6 +1,6 @@
-{% extends "fix.html.twig" %}
+{% extends "fixadmin.html.twig" %}
 {% block content %}
-    {{ form_start(form) }}
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
     <div class="container-fluid">
         <center style="margin-top:20px;margin-bottom:20px"><h3 class="d-inline" style="color:#7571f9;">Modifier un sponsor</h3></center>
         <div class="row justify-content-center">
@@ -15,7 +15,7 @@
                                     </label>
 
                                     <div class="col-lg-6">
-                                        {{ form_widget(form.sponsor, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_widget(form.sponsor, {'attr': {'class': 'form-control', 'disabled': 'disabled'}}) }}
                                         <small class="alert-danger">{{ form_errors(form.sponsor) }}</small>
                                     </div>
                                 </div>
@@ -25,7 +25,7 @@
                                     </label>
 
                                     <div class="col-lg-6">
-                                        {{ form_widget(form.montant, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_widget(form.montant, {'attr': {'class': 'form-control', 'disabled': 'disabled'}}) }}
                                         <small class="alert-danger">{{ form_errors(form.montant) }}</small>
                                     </div>
                                 </div>
@@ -33,7 +33,7 @@
                                     <label class="col-lg-4 col-form-label" for="val-email">{{ form_label(form.adresse) }} <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        {{ form_widget(form.adresse, {'attr': {'class': 'form-control mydatepicker'}}) }}
+                                        {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
                                         <small class="alert-danger">{{ form_errors(form.adresse) }}</small>
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@
                                     <label class="col-lg-4 col-form-label" for="val-suggestions">{{ form_label(form.datesignature) }}  <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        {{ form_widget(form.datesignature, {'attr': {'class': 'form-control mydatepicker'}}) }}
+                                        {{ form_widget(form.datesignature, {'attr': {'class': 'form-control mydatepicker', 'disabled': true}}) }}
                                         <small class="alert-danger">{{ form_errors(form.datesignature) }}</small>
                                     </div>
                                 </div>

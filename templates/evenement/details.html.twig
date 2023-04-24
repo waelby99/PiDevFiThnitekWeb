@@ -7,8 +7,12 @@
                                 <div class="card">
                                         <div class="card-body">
 
-                                                <h5 style="color: #76838f;">L'événement : {{ events.titre }}, Lieu : {{ events.lieu}}, La date :{{ events.date.format('Y-m-d')}} et le nombre des participants : {{ events.nbparticipants }}</h5>
-                                                <p>{{ events.description }} .</p>
+                                                <h5 style="color: #76838f;">
+                                                        <ul><li>L'événement : {{ events.titre }}</li><br>
+                                                                <li>Lieu : {{ events.lieu}}</li><br>
+                                                                <li> La date :{{ events.date.format('Y-m-d')}} </li><br>
+                                                                <li> Le nombre des participants : {{ events.nbparticipants }}</li><br>
+                                                <li>Description :{{ events.description }}</li> .</ul></h5>
                                                 <h4 class="card-title">Les sponsors de cet événement : </h4>
                                                 <div class="table-responsive">
                                                         <table class="table table-striped table-bordered zero-configuration">

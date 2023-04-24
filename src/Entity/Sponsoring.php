@@ -34,10 +34,12 @@ class Sponsoring
     private ?string $adresse=null;
 
     #[ORM\Column(length:20)]
-    #[Assert\LessThanOrEqual(" now -2days", message: "La date de signature doit être inférieure à la date d'aujourd'hui.")]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\EqualTo("today", message: "La date de signature doit être égale à la date d'aujourd'hui.")]
     private ?\DateTime $datesignature=null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
     #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
     private ?string $email=null;
 
@@ -88,7 +90,7 @@ class Sponsoring
         return $this->datesignature;
     }
 
-    public function setDatesignature(?DateTime $datesignature): self
+    public function setDatesignature(?\DateTime $datesignature): self
     {
         $this->datesignature = $datesignature;
 

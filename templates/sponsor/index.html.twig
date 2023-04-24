@@ -47,16 +47,46 @@
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#search').on('keyup', function() {
-                var value = $(this).val();
-                $('#table tbody tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });});});
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--<script>
+        $( document ).ready(function() {
+            $("#search").keyup(function(e){
 
-    </script>
+                var value = $(this).val();
+
+                $.ajax({
+
+                    url : "",
+
+                    type : 'GET',
+
+                    data: {
+                        'searchValue' : value
+                    },
+
+                    success : function(retour){
+                        if(retour){
+                            $('#t tbody#searchtab').empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $('#t tbody#all').hide();
+                                $('#t tbody#searchtab').append('<tr><td> '+obj.id+'
+                                    </td><td> '+obj.nsc+' </td><td>'+obj.email+' </td><td><a
+                                href="updateStudent/'+obj.id+'">modifier</a> </br><a
+                                href="deleteStudent/'+obj.id+'">supprimer</a></td></tr>');
+                            });
+                        }
+                        else
+                        {
+                            $('#t tbody#all').show();
+                            $('#t tbody#searchtab').empty();
+                            $('#t tbody#searchtab').fadeIn('fast');
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>-->
+
 
 {% endblock %}

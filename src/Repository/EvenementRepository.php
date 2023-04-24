@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Evenement;
-use App\Entity\Sponsoring;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
