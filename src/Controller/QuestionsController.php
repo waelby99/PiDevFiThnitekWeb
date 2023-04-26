@@ -15,32 +15,35 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 
-
 #[Route('/questions')]
 class QuestionsController extends AbstractController
 {
-    #[Route('/', name: 'app_questions_index', methods: ['GET'])]
-    public function index(QuestionsRepository $questionsRepository): Response
+    #[Route('/{sondageId}', name: 'app_questions_index', methods: ['GET'])]
+    public function index(QuestionsRepository $questionsRepository ,int $sondageId): Response
     {
         return $this->render('questions/index.html.twig', [
             'questions' => $questionsRepository->findAll(),
+            'sondageId' =>$sondageId,
         ]);
     }
 
-    #[Route('/new', name: 'app_questions_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, QuestionsRepository $questionsRepository): Response
+    #[Route('/new/{sondageId}', name: 'app_questions_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, QuestionsRepository $questionsRepository,int $sondageId ,EntityManagerInterface $entityManager): Response
     {
         $question = new Questions();
+        $sondage = $entityManager->getRepository(Sondage::class)->find($sondageId);
+        $question ->setSondage($sondage);
         $form = $this->createForm(QuestionsType::class, $question);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $questionsRepository->save($question, true);
 
-            return $this->redirectToRoute('app_questions_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_questions_index', ['sondageId' =>$sondageId], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questions/new.html.twig', [
+            'sondageId' =>$sondageId,
             'question' => $question,
             'form' => $form,
         ]);
@@ -54,8 +57,8 @@ class QuestionsController extends AbstractController
         ]);
     }
 
-    #[Route('/{questionId}/edit', name: 'app_questions_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Questions $question, QuestionsRepository $questionsRepository): Response
+    #[Route('/{sondageId}/{questionId}/edit', name: 'app_questions_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Questions $question, QuestionsRepository $questionsRepository,int $sondageId ,EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(QuestionsType::class, $question);
         $form->handleRequest($request);
@@ -63,10 +66,11 @@ class QuestionsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $questionsRepository->save($question, true);
 
-            return $this->redirectToRoute('app_questions_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_questions_index', ['sondageId' =>$sondageId], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questions/edit.html.twig', [
+            'sondageId' =>$sondageId,
             'question' => $question,
             'form' => $form,
         ]);
@@ -80,21 +84,25 @@ class QuestionsController extends AbstractController
 
         
         return $this->render('questions/index.html.twig', [
+            'sondageId'=>$sondageId,
             'questions' => $questions,
             
         ]);
     }
 
-    #[Route('/{questionId}', name: 'app_questions_delete', methods: ['POST'])]
-    public function delete(Request $request, Questions $question, QuestionsRepository $questionsRepository): Response
+   #[Route('/{sondageId}/{questionId}', name: 'app_questions_delete', methods: ['POST'])]
+    public function delete(Request $request, Questions $question, QuestionsRepository $questionsRepository,int $sondageId ,EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$question->getQuestionId(), $request->request->get('_token'))) {
             $questionsRepository->remove($question, true);
         }
 
-        return $this->redirectToRoute('app_questions_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_questions_index', ['sondageId' => $sondageId], Response::HTTP_SEE_OTHER);
     }
     
+    
+    
+
 
 
 

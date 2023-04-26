@@ -20,6 +20,17 @@ class DemandecovoiturageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Demandecovoiturage::class);
     }
+     public function listeOffre($idOffre)
+    {
+        return $this->createQueryBuilder('a')
+            -> join ('a.offrecovoiturage','c')
+            ->addSelect ('c')
+            ->andWhere('c.idOffre = :val')
+            ->setParameter('val', $idOffre)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
 
     public function save(Demandecovoiturage $entity, bool $flush = false): void
     {

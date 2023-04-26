@@ -40,6 +40,18 @@ class DemandecovoiturageController extends AbstractController
         ]);
     }
 
+    public function listOffre(DemandecovoiturageRepository $repo, $idOffre): Response
+    {
+
+       $questions = $repo->findById($idOffre);
+
+        
+        return $this->render('Demandecovoiturage/index.html.twig', [
+            'Demandecovoiturage' => $Demandecovoiturage,
+            
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_demandecovoiturage_show', methods: ['GET'])]
     public function show(Demandecovoiturage $demandecovoiturage): Response
     {

@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 class QuestionsType extends AbstractType
@@ -24,24 +24,8 @@ class QuestionsType extends AbstractType
                 'choice_label'=>'sujet',
                 'label'=>'sondage']);
         ;*/
-         ->add('sondage')
-            ->add('question', TextType::class, [
-                'constraints' => [
-                    new Assert\NotBlank([
-                        'message' => 'Le champ  ne doit pas être vide.'
-                    ]),
-                    new Assert\Length([
-                        'min' => 3,
-                        'max' => 100,
-                        'minMessage' => 'Le champ doit contenir au moins {{ limit }} caractères',
-                        'maxMessage' => 'Le champ ne doit pas contenir plus de {{ limit }} caractères',
-                    ]),
-                    new Regex([
-                        'pattern' => '/\?$/',
-                        'message' => 'la question doit se terminer par un point d\'interrogation',
-                    ]),
-
-                ]])
+        
+            ->add('question', TextType::class )
 
             ->add('type', ChoiceType::class,[
                 'expanded' => true,
@@ -51,13 +35,11 @@ class QuestionsType extends AbstractType
                     'YES/NO'=>"YES/NO",
                    
                 
-                ],
-                'attr'=>[
-                    'style'=>'display : flex; flex-direction: row-reverse; align-items: flex-start; justify-content : center; ',
+                #],
+                #'attr'=>[
+                   # 'style'=>'display : flex; flex-direction: row-reverse; align-items: flex-start; justify-content : center; ',
                 ]
-                
-                
-                ]);
+                                ]);
           
 
           
