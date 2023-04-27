@@ -16,15 +16,17 @@ use App\Repository\AvisRepository;
 class AvisController extends AbstractController
 {
     #[Route('/avis', name: 'app_avis')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(Request $request,ManagerRegistry $doctrine,AvisRepository $avisRepository): Response
     {
         $repo = $doctrine->getRepository(Avis::class);
         $Avis = $repo->findAll();
+        $nombreAvis = $avisRepository->countAvis();
 
     
         return $this->render('avis/index.html.twig', [
             'controller_name' => 'AvisController',
             'Avis' => $Avis,
+            'nombreAvis' => $nombreAvis
         ]);
     }
 
@@ -86,9 +88,9 @@ class AvisController extends AbstractController
          $query = $request->query->get('query');
 
         if (!$query) {
-        $Avis = $repo->findAll();
+           $Avis = $repo->findAll();
         } else {
-        $Avis = $repo->searchByQuery($query);
+           $Avis = $repo->searchByQuery($query);
     }
     return $this->render('avis/index.html.twig', [
         'controller_name' => 'AvisController',

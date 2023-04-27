@@ -7,6 +7,9 @@
                 <a href='{{path('add_avis')}}' class="btn mb-1 btn-info float-right" style="margin-right: 20px"><i class="mdi mdi-plus"></i><span> Ajouter un avis</span></a>
             </h1></center>
             <center>
+             <div>
+              <p>Nombre total des avis: {{ nombreAvis }}</p></div>  
+            <div  style=" width:300px;">
             <div  style=" width:300px;">
                 <form method="get" action="{{ path('search_avis') }}">
                     <div class="input-group">
@@ -24,6 +27,7 @@
                             <div class="card-body" >
                                 
                                 <div class="table-responsive" >
+                                
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>

@@ -11,22 +11,35 @@ use App\Entity\Reclamation;
 use App\Form\ReclamationType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ReclamationRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use App\Service\Mailer;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 class ReclamationController extends AbstractController
 {
     #[Route('/reclamation', name: 'app_reclamation')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(Request $request,ManagerRegistry $doctrine,ReclamationRepository $reclamationRepository,PaginatorInterface $paginator): Response
     {
         $repo = $doctrine->getRepository(Reclamation::class);
         $Reclamations = $repo->findAll();
+        $nombreReclamations = $reclamationRepository->countReclamations();
+        $pagination = $paginator->paginate(
+            $Reclamations,
+            $request->query->getInt('page', 1),
+            5
+        );
 
         return $this->render('reclamation/index.html.twig', [
             'controller_name' => 'ReclamationController',
-            'Reclamations'=>$Reclamations
+            'Reclamations'=>$Reclamations,
+            'nombreReclamations' => $nombreReclamations,
+            'pagination' => $pagination,
         ]);
     }
     #[Route('/addreclamation', name: 'add_reclamation')]
-    public function add(Request $request, EntityManagerInterface $entityManager): Response
+    public function add(Request $request, EntityManagerInterface $entityManager, Mailer $mailer,MailerInterface $mailer1): Response
     {
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
@@ -39,26 +52,26 @@ class ReclamationController extends AbstractController
                 $extension = $image->getClientOriginalExtension();
                 $newFilename = 'images/attachments/' . $originalFilename . '.' . $extension;
 
-    
                     $image->move(
                         $this->getParameter('dossier_images'),
                         $newFilename
                     );
-                
-    
+                   
                 $reclamation->setImage($newFilename);
             }
-
             $reclamation->setContenu($this->censureMauvaisMots($reclamation->getContenu()));
-
             $entityManager->persist($reclamation);
             $entityManager->flush();
+            
+            $mailer->sendEmail('niheleeroui124@gmail.com',"niheleeroui124@gmail.com", 'Nouvelle réclamation', 'Une nouvelle réclamation a été ajoutée.',$mailer1);
+            
             return $this->redirectToRoute('app_reclamation');
         }
         return $this->render('reclamation/add.html.twig', [
             'form' => $form->createView()
         ]);
     }
+    
 
     private function censureMauvaisMots($contenu)
     {
@@ -66,6 +79,8 @@ class ReclamationController extends AbstractController
         $stars = str_repeat('*', 5);
         return str_ireplace($mauvaisMots, $stars, $contenu);
     }
+
+    
 
     #[Route('/reclamationdetail/{id}', name: 'detail_reclamation')]
     public function detail($id,ManagerRegistry $doctrine,EntityManagerInterface $entityManager): Response
@@ -132,7 +147,7 @@ class ReclamationController extends AbstractController
         'controller_name' => 'ReclamationController',
         'Reclamations'=>$Reclamations
     ]);
-}
+   }
 
 
     #[Route('/reclamationAdmin', name: 'app_reclamationAdmin')]
@@ -146,4 +161,69 @@ class ReclamationController extends AbstractController
             'Reclamations'=>$Reclamations
         ]);
     }
+
+    #[Route('/calender', name: 'app_calender')]
+    public function calender(): Response
+    {  
+
+        return $this->render('reclamation/calender.html.twig');
+    }
+    
+    
+
+    #[Route('/orderByIntitule', name: 'tri_intitule')]
+    public function OrderIntitule(Request $request, ReclamationRepository $reclamationRepository, PaginatorInterface $paginator,ManagerRegistry $doctrine)
+   {
+    $repo = $doctrine->getRepository(Reclamation::class);
+    $Reclamations = $repo->findAll();
+    $nombreReclamations = $reclamationRepository->countReclamations();
+    $sort = $request->query->get('sort'); // Récupérer la valeur sélectionnée dans la liste déroulante
+
+    $order = ($sort === 'asc') ? 'ASC' : 'DESC';
+
+    $reclamations = $reclamationRepository->findByIntituleAlphabetical($order);
+
+    $pagination = $paginator->paginate(
+        $reclamations,
+        $request->query->getInt('page', 1),
+        5
+    );
+
+    return $this->render('reclamation/index.html.twig', [
+            'controller_name' => 'ReclamationController',
+            'Reclamations'=>$Reclamations,
+            'nombreReclamations' => $nombreReclamations,
+            'pagination' => $pagination,
+    ]);
+   }
+
+   #[Route('/orderByIntitule1', name: 'tri_intitule1')]
+public function OrderIntituleAdmin(Request $request, ReclamationRepository $reclamationRepository, PaginatorInterface $paginator,ManagerRegistry $doctrine)
+{
+    $repo = $doctrine->getRepository(Reclamation::class);
+    $Reclamations = $repo->findAll();
+    $nombreReclamations = $reclamationRepository->countReclamations();
+    $sort = $request->query->get('sort'); // Récupérer la valeur sélectionnée dans la liste déroulante
+
+    $order = ($sort === 'asc') ? 'ASC' : 'DESC';
+
+    $reclamations = $reclamationRepository->findByIntituleAlphabetical($order);
+
+    $pagination = $paginator->paginate(
+        $reclamations,
+        $request->query->getInt('page', 1),
+        5
+    );
+
+    return $this->render('reclamation/consulterAdmin.html.twig', [
+            'controller_name' => 'ReclamationController',
+            'Reclamations'=>$Reclamations,
+            'nombreReclamations' => $nombreReclamations,
+            'pagination' => $pagination,
+    ]);
+}
+
+    
+    
+     
 }

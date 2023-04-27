@@ -35,13 +35,22 @@
                                     <div  class="col-lg-6" style="margin-top:20px">
                                         {{ form_widget(form.iduser, {'attr': {'class': 'form-control'}}) }}
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label">{{ form_label(form.image) }}</label>
+
+                                    <div class="col-lg-6" style="margin-top:20px">
+                                        <label class="col-lg-4 col-form-label">{{ form_label(form.image) }}<span class="text-danger">*</span></label>
                                         <div class="col-lg-6">
-                                            {{ form_widget(form.image, {'attr': {'class': 'form-control-file'}}) }}
+                                            {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
                                             {{ form_errors(form.image) }}
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-6" style="margin-top:-5px">
+                                     <label style="margin-top:20px" class="col-lg-4 col-form-label">{{ form_label(form.date) }}<span class="text-danger">*</span></label>
+                                   <div class="col-lg-6">
+                                     {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                                     {{ form_errors(form.date) }}
+                                    </div>
+                                </div>
                                     
                                 </div>
                                

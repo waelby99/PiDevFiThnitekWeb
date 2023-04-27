@@ -47,6 +47,13 @@ class AvisRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
    }
+   public function countAvis(): int
+   {
+    return $this->createQueryBuilder('a')
+        ->select('COUNT(a.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
 
 //    /**
 //     * @return Avis[] Returns an array of Avis objects

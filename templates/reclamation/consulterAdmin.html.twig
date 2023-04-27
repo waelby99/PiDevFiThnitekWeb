@@ -6,6 +6,15 @@
             
             </h3></center>
 
+            <div class="col-sm-4" style=" width:350px; margin-top:20px;">
+              <form action="{{ path('tri_intitule1') }}" method="get" class="form-group">
+              <select name="sort" class="form-control" onchange="this.form.submit()">
+                <option value="asc">Tri par ordre alphabétique ascendant</option>
+                <option value="desc">Tri par ordre alphabétique descendant</option>
+              </select>
+              </form>
+            </div>
+
      <div class="col-lg-6" style="margin-left:100px;margin-right:200px">
                         <div class="card" style="margin-top:40px;margin-bottom:20px;margin-left:70px;margin-right:-300px" >
                             <div class="card-body" >

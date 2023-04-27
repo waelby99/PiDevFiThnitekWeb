@@ -41,6 +41,13 @@
                                      {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                 <label style="margin-top:20px" class="col-lg-4 col-form-label">{{ form_label(form.date) }}</label>
+                                   <div class="col-lg-6">
+                                     {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
  
                             
                                 {{ form_rest(form) }}

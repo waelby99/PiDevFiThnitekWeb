@@ -19,7 +19,12 @@ class AvisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('commenraire')
+            ->add('commenraire', TextType::class, [
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Le champ intitulé ne doit pas être vide.'
+                    ])
+                ]])
             ->add('iduser',EntityType::class,
             ['class'=>User::class,
             'choice_label'=>'nom',

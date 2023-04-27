@@ -44,9 +44,47 @@ class ReclamationRepository extends ServiceEntityRepository
         ->where('r.intitule LIKE :query')
         ->orWhere('r.contenu LIKE :query')
         ->setParameter('query', '%'.$query.'%')
+        ->orderBy('r.intitule', 'ASC')
         ->getQuery()
         ->getResult();
    }
+   public function countReclamations(): int
+   {
+    return $this->createQueryBuilder('r')
+        ->select('COUNT(r.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
+    public function findAllOrderByIntituleDESC()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.intitule', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllOrderByIntituleASC()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.intitule')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByIntituleAlphabetical($order = 'ASC')
+{
+    $queryBuilder = $this->createQueryBuilder('r')
+        ->orderBy('r.intitule', $order);
+    
+    return $queryBuilder->getQuery()->getResult();
+}
+
+  
+   
+
+
+
 
 //    /**
 //     * @return Reclamation[] Returns an array of Reclamation objects

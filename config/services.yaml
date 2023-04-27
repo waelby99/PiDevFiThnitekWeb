@@ -7,10 +7,17 @@ parameters:
      dossier_images: '/path/to/images/folder'
 
 services:
+    App\EventSubscriber\CalendarSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+    App\Service\Mailer:
+        arguments:
+            $fromEmail: '%env(FROM_EMAIL)%'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

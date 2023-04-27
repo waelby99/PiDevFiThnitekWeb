@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\DateType ;
+
+
 
 class ReclamationType extends AbstractType
 {
@@ -44,13 +47,21 @@ class ReclamationType extends AbstractType
                         'maxSize' => '2Mi',
                         'mimeTypesMessage' => 'Télécharger une image valide',
                     ])
-                ],
-          
-            
-                
+                ],   
             ])
+            ->add('date',DateType::class, [
+                'widget'=>'single_text',
+                'required' => true,
+                'data'=> new \DateTime(),
+                'attr' => [
+                'min' => (new \DateTime())->format('Y-m-d')
+              ]
+              ])
+            
         ;
     }
+
+    
 
     public function configureOptions(OptionsResolver $resolver): void
     {

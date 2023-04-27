@@ -24,10 +24,13 @@ class Reclamation
     #[ORM\JoinColumn(name: 'idUser')]
     private ?User $iduser = null;
 
-    #[ORM\Column(length: 2550)]
+    #[ORM\Column(length: 255)]
     public ?string $image = null;
-
-
+    
+    #[ORM\Column(length:20)]
+    private ?\DateTime $date ;
+    
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,18 @@ class Reclamation
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTime
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTime $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
