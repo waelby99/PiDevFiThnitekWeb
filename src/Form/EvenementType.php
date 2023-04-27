@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class EvenementType extends AbstractType
 {
@@ -17,10 +18,13 @@ class EvenementType extends AbstractType
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
             ])
+            ->add('datefin', DateType::class, [
+                'widget' => 'single_text',
+            ])
             ->add('titre')
-            ->add('description')
-           // ->add('nbparticipants')
-        ;
+            ->add('description',TextareaType::class, [
+        'attr' => ['class' => 'tinymce'],
+]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

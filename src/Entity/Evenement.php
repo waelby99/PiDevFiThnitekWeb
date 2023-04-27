@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EvenementRepository;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
@@ -22,7 +23,12 @@ class Evenement
 
     #[ORM\Column(length:20)]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\LessThan(propertyPath: 'datefin', message: "La date de début doit être inférieure à la date de fin.")]
     private ?\DateTime $date=null;
+
+    #[ORM\Column(length:20)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    private ?\DateTime $datefin=null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
@@ -66,6 +72,18 @@ class Evenement
         return $this;
     }
 
+    public function getDatefin(): ?\DateTime
+    {
+        return $this->datefin;
+    }
+
+    public function setDatefin(?\DateTime $datefin): self
+    {
+        $this->datefin = $datefin;
+
+        return $this;
+    }
+
     public function getTitre(): ?string
     {
         return $this->titre;
@@ -101,6 +119,14 @@ class Evenement
 
         return $this;
     }
+   /* public function validationDateFin(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->datefin && $this->date && $this->datefin < $this->date) {
+            $context->buildViolation("La date de fin ne peut pas être antérieure à la date de début.")
+                ->atPath('datefin')
+                ->addViolation();
+        }
+    }*/
 
 
 }

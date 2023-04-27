@@ -5,6 +5,8 @@ namespace App\Controller;
 
 use App\Entity\Sponsoring;
 use App\Form\SponsorType;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\SponsoringRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -60,7 +62,8 @@ class SponsorController extends AbstractController
             return $this->redirectToRoute('app_sponsor');
         }
         return $this->render('sponsor/modifier.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'sponsor'=>$sponsor
         ]);
     }
     #[Route('/sponsordetail/{id}', name: 'detail_sponsor')]
@@ -84,5 +87,18 @@ class SponsorController extends AbstractController
         $jsonContent = $Normalizer->normalize($sponsorings,'json',['groups'=>'sponsorings']);
         $retour=json_encode($jsonContent);
         return new Response($retour);
+    }
+
+    #[Route('/search', name:'searchSponsor')]
+    public function search(Request $request, SponsoringRepository $sr, SerializerInterface $serializer)
+    {
+        $query = $request->query->get('query');
+        $sponsors = $sr->createQueryBuilder('sponsoring')
+            ->where('sponsoring.sponsor LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+        $json = $serializer->serialize($sponsors, 'json');
+        return new JsonResponse($json);
     }
 }

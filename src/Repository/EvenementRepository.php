@@ -53,6 +53,13 @@ class EvenementRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function findByParticipants():array
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.nbparticipants', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Evenement[] Returns an array of Evenement objects
 //     */

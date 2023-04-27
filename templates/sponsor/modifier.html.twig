@@ -15,7 +15,7 @@
                                     </label>
 
                                     <div class="col-lg-6">
-                                        {{ form_widget(form.sponsor, {'attr': {'class': 'form-control', 'disabled': 'disabled'}}) }}
+                                        {{ form_widget(form.sponsor, {'attr': {'class': 'form-control', 'readonly': true}}) }}
                                         <small class="alert-danger">{{ form_errors(form.sponsor) }}</small>
                                     </div>
                                 </div>
@@ -25,7 +25,7 @@
                                     </label>
 
                                     <div class="col-lg-6">
-                                        {{ form_widget(form.montant, {'attr': {'class': 'form-control', 'disabled': 'disabled'}}) }}
+                                        {{ form_widget(form.montant, {'attr': {'class': 'form-control', 'readonly': true}}) }}
                                         <small class="alert-danger">{{ form_errors(form.montant) }}</small>
                                     </div>
                                 </div>
@@ -51,8 +51,8 @@
                                     <label class="col-lg-4 col-form-label" for="val-suggestions">{{ form_label(form.datesignature) }}  <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        {{ form_widget(form.datesignature, {'attr': {'class': 'form-control mydatepicker', 'disabled': true}}) }}
-                                        <small class="alert-danger">{{ form_errors(form.datesignature) }}</small>
+                                        {{ form_widget(form.datesignature, {'attr': {'class': 'form-control mydatepicker','readonly': true}}) }}
+                                        <small class="alert-danger">{{ form_errors(form.datesignature) }}</small>>
                                     </div>
                                 </div>
                                 {{ form_rest(form) }}

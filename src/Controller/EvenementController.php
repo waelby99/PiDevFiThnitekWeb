@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\EvenementRepository;
+use App\Repository\SponsoringRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
@@ -10,6 +13,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Evenement;
 use App\Form\EvenementType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Relation1;
+use App\Form\Relation1Type;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class EvenementController extends AbstractController
 {
@@ -62,14 +68,46 @@ class EvenementController extends AbstractController
         ]);
     }
     #[Route('/evenementdetail/{id}', name: 'detail_event')]
-    public function detail($id,ManagerRegistry $doctrine,EntityManagerInterface $entityManager): Response
+    public function detail(Request $request,$id,ManagerRegistry $doctrine,EntityManagerInterface $entityManager): Response
     {
         $evenement =  $doctrine->getRepository(Evenement::class)->find($id);
         $sponsors = $doctrine->getRepository(Evenement::class)->getSponsorByEvenementId($entityManager, $id);
+        $relation = new Relation1();
+        $form = $this->createForm(Relation1Type::class, $relation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $relation->setIdEvenement($evenement);
+            $entityManager->persist($relation);
+            $entityManager->flush();
+            return $this->redirectToRoute('detail_event', ['id' => $id]);
+        }
       return $this->render('evenement/details.html.twig', [
             'controller_name' => 'EvenementController',
             'events'=>$evenement,
-          'sponsors'=>$sponsors
+          'sponsors'=>$sponsors,
+          'form'=>$form->createView()
       ]);
+    }
+    #[Route('/addspsrtoevent', name: 'add_spsr_to_event')]
+    public function addsps(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $relation = new Relation1();
+        $form = $this->createForm(Relation1Type::class, $relation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($relation);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_evenement');
+        }
+        return $this->render('evenement/affecter.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+    #[Route('/trievent', name:'trievent')]
+    public function trier(Request $request, EvenementRepository $er, SerializerInterface $serializer)
+    {
+        $events = $er->findByParticipants();
+        $json = $serializer->serialize($events, 'json');
+        return new JsonResponse($json);
     }
 }
