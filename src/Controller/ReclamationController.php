@@ -156,7 +156,7 @@ class ReclamationController extends AbstractController
         $repo = $doctrine->getRepository(Reclamation::class);
         $Reclamations = $repo->findAll();
 
-        return $this->render('reclamation/consulterAdmin.html.twig', [
+        return $this->render('fixadmin.html.twig', [
             'controller_name' => 'ReclamationController',
             'Reclamations'=>$Reclamations
         ]);
@@ -215,7 +215,7 @@ public function OrderIntituleAdmin(Request $request, ReclamationRepository $recl
         5
     );
 
-    return $this->render('reclamation/consulterAdmin.html.twig', [
+    return $this->render('fixadmin.html.twig', [
             'controller_name' => 'ReclamationController',
             'Reclamations'=>$Reclamations,
             'nombreReclamations' => $nombreReclamations,
