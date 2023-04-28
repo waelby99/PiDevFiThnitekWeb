@@ -55,6 +55,30 @@ class AvisRepository extends ServiceEntityRepository
         ->getSingleScalarResult();
     }
 
+    public function findAllOrderByCommentaireDESC()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.commenraire', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllOrderByCommentaireASC()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.commenraire')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByCommentaireAlphabetical($order = 'ASC')
+{
+    $queryBuilder = $this->createQueryBuilder('a')
+        ->orderBy('a.commenraire', $order);
+    
+    return $queryBuilder->getQuery()->getResult();
+}
+
 //    /**
 //     * @return Avis[] Returns an array of Avis objects
 //     */

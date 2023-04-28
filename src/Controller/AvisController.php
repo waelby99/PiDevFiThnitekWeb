@@ -110,6 +110,33 @@ class AvisController extends AbstractController
     ]);
    }
 
+   #[Route('/orderByCommentaire', name: 'tri_commentaire')]
+   public function OrderCommentaire(Request $request, AvisRepository $avisRepository, PaginatorInterface $paginator,ManagerRegistry $doctrine)
+  {
+   $repo = $doctrine->getRepository(Avis::class);
+   $Avis = $repo->findAll();
+   $nombreAvis = $avisRepository->countAvis();
+   $sort = $request->query->get('sort'); 
+
+   $order = ($sort === 'asc') ? 'ASC' : 'DESC';
+
+   $avis = $avisRepository->findByCommentaireAlphabetical($order);
+
+   $pagination = $paginator->paginate(
+       $avis,
+       $request->query->getInt('page', 1),
+       5
+   );
+
+   return $this->render('avis/index.html.twig', [
+           'controller_name' => 'AvisController',
+           'Avis'=>$Avis,
+           'nombreAvis' => $nombreAvis,
+           'pagination' => $pagination,
+   ]);
+  }
+
+
     #[Route('/avisAdmin', name: 'app_avisAdmin')]
     public function indexAdmin(ManagerRegistry $doctrine): Response
     {

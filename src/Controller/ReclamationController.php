@@ -132,7 +132,7 @@ class ReclamationController extends AbstractController
         return $this->redirectToRoute('app_reclamation');
     }
     #[Route('/search', name: 'search_reclamation')]
-    public function search(Request $request, ManagerRegistry $doctrine): Response
+    public function search(Request $request, ManagerRegistry $doctrine,ReclamationRepository $reclamationRepository,PaginatorInterface $paginator): Response
     {
          $repo = $doctrine->getRepository(Reclamation::class);
          $query = $request->query->get('query');
@@ -141,26 +141,62 @@ class ReclamationController extends AbstractController
         $Reclamations = $repo->findAll();
         } else {
         $Reclamations = $repo->searchByQuery($query);
+        $nombreReclamations = $reclamationRepository->countReclamations();
+        $pagination = $paginator->paginate(
+            $Reclamations,
+            $request->query->getInt('page', 1),
+            5
+        );
     }
 
     return $this->render('reclamation/index.html.twig', [
         'controller_name' => 'ReclamationController',
-        'Reclamations'=>$Reclamations
+        'Reclamations'=>$Reclamations,
+        'nombreReclamations' => $nombreReclamations,
+        'pagination' => $pagination,
     ]);
    }
 
 
     #[Route('/reclamationAdmin', name: 'app_reclamationAdmin')]
-    public function indexAdmin(ManagerRegistry $doctrine): Response
+    public function indexAdmin(ManagerRegistry $doctrine,ReclamationRepository $reclamationRepository): Response
     {
         $repo = $doctrine->getRepository(Reclamation::class);
         $Reclamations = $repo->findAll();
+        $nombreReclamations = $reclamationRepository->countReclamations();
 
         return $this->render('fixadmin.html.twig', [
             'controller_name' => 'ReclamationController',
+            'nombreReclamations' => $nombreReclamations,
             'Reclamations'=>$Reclamations
         ]);
     }
+
+    #[Route('/search1', name: 'search_reclamation1')]
+    public function search1(Request $request, ManagerRegistry $doctrine,ReclamationRepository $reclamationRepository,PaginatorInterface $paginator): Response
+    {
+         $repo = $doctrine->getRepository(Reclamation::class);
+         $query = $request->query->get('query');
+
+        if (!$query) {
+        $Reclamations = $repo->findAll();
+        } else {
+        $Reclamations = $repo->searchByQuery($query);
+        $nombreReclamations = $reclamationRepository->countReclamations();
+        $pagination = $paginator->paginate(
+            $Reclamations,
+            $request->query->getInt('page', 1),
+            5
+        );
+    }
+
+    return $this->render('fixadmin.html.twig', [
+        'controller_name' => 'ReclamationController',
+        'Reclamations'=>$Reclamations,
+        'nombreReclamations' => $nombreReclamations,
+        'pagination' => $pagination,
+    ]);
+   }
 
     #[Route('/calender', name: 'app_calender')]
     public function calender(): Response
@@ -177,7 +213,7 @@ class ReclamationController extends AbstractController
     $repo = $doctrine->getRepository(Reclamation::class);
     $Reclamations = $repo->findAll();
     $nombreReclamations = $reclamationRepository->countReclamations();
-    $sort = $request->query->get('sort'); // Récupérer la valeur sélectionnée dans la liste déroulante
+    $sort = $request->query->get('sort'); 
 
     $order = ($sort === 'asc') ? 'ASC' : 'DESC';
 
@@ -203,7 +239,7 @@ public function OrderIntituleAdmin(Request $request, ReclamationRepository $recl
     $repo = $doctrine->getRepository(Reclamation::class);
     $Reclamations = $repo->findAll();
     $nombreReclamations = $reclamationRepository->countReclamations();
-    $sort = $request->query->get('sort'); // Récupérer la valeur sélectionnée dans la liste déroulante
+    $sort = $request->query->get('sort');
 
     $order = ($sort === 'asc') ? 'ASC' : 'DESC';
 

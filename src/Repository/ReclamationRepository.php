@@ -44,7 +44,7 @@ class ReclamationRepository extends ServiceEntityRepository
         ->where('r.intitule LIKE :query')
         ->orWhere('r.contenu LIKE :query')
         ->setParameter('query', '%'.$query.'%')
-        ->orderBy('r.intitule', 'ASC')
+        ->orderBy('r.intitule')
         ->getQuery()
         ->getResult();
    }

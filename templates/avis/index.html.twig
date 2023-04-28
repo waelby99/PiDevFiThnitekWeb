@@ -9,7 +9,7 @@
             <center>
              <div>
               <p>Nombre total des avis: {{ nombreAvis }}</p></div>  
-            <div  style=" width:300px;">
+            
             <div  style=" width:300px;">
                 <form method="get" action="{{ path('search_avis') }}">
                     <div class="input-group">
@@ -19,6 +19,16 @@
               </form>
     
            </div>
+
+           <div class="col-sm-4" style=" width:350px; margin-top:20px;">
+              <form action="{{ path('tri_commentaire') }}" method="get" class="form-group">
+              <select name="sort" class="form-control" onchange="this.form.submit()">
+                <option value="asc">Tri par ordre alphabétique ascendant</option>
+                <option value="desc">Tri par ordre alphabétique descendant</option>
+              </select>
+              </form>
+            </div>
+
            </center>
             
 

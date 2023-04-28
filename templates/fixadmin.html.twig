@@ -1,5 +1,5 @@
 <head>
-    {% block head%}
+   
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -19,10 +19,10 @@
         <link rel="stylesheet" href="{{asset('./plugins/timepicker/bootstrap-timepicker.min.css')}}">
         <link href="{{asset('./plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
         <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css')}}" rel="stylesheet"/>
-    {% endblock %}
+    
 </head>
 <body>
-{% block body%}
+
 <div id="main-wrapper">
     <div class="nav-header">
         <a href="">
@@ -106,15 +106,28 @@
             </ul>
         </div>
     </div>
-    {% endblock %}
+    
     <div class="content-body">
-    {% block content %}
+   
         <!-- l code mteeekom lena -->
 
         <div class="content-body" style="margin-left:-5px">
         <center style="margin-top:20px;margin-bottom:20px;margin-left:30px"><h3 class="d-inline" style="color:#7571f9;">Liste des réclamations
             
-            </h3></center>
+            </h3>
+            <div>
+              <p>Nombre total de réclamations : {{ nombreReclamations }}</p></div>  
+            <div  style=" width:300px;">
+                <form method="get" action='{{ path('search_reclamation1') }}'>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="query" placeholder="Rechercher une reclamation">
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </div>
+              </form>
+
+              
+            </div>
+            </center>
 
             <div class="col-sm-4" style=" width:350px; margin-top:20px;">
               <form action="{{ path('tri_intitule1') }}" method="get" class="form-group">
@@ -165,18 +178,18 @@
 
 
 
-    {% endblock %}
+   
     </div>
 </body>
 <footer>
-    {% block footer %}
+    
     <div class="footer" style="position: fixed;bottom: 0;width:100%;">
         <div class="copyright">
             <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">TechLeaders</a> 2023</p>
         </div>
     </div>
     <div>
-        {% endblock %}
+        
         <script src="{{asset('./js/dashboard/dashboard-1.js')}}"></script>
         <script src="{{asset('plugins/common/common.min.js')}}"></script>
         <script src="{{asset('js/custom.min.js')}}"></script>
@@ -235,7 +248,7 @@
     {% endblock %}
 </head>
 <body>
-{% block body%}
+
 <div id="main-wrapper">
     <div class="nav-header">
         <a href="">
@@ -311,7 +324,7 @@
             </ul>
         </div>
     </div>
-    {% endblock %}
+  
     <div class="content-body">
     {% block content %}
         <!-- l code mteeekom lena -->
