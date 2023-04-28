@@ -15,7 +15,7 @@ class CalendarSubscriber implements EventSubscriberInterface
     private $reclamationRepo ;
     private $router;
 
-    public function __construct( ReclamationRepository $recl , UrlGeneratorInterface $router )
+    public function __construct(ReclamationRepository $recl , UrlGeneratorInterface $router )
     {
 
         $this->reclamationRepo=$recl;
@@ -40,8 +40,9 @@ class CalendarSubscriber implements EventSubscriberInterface
        foreach( $reclamations as $r){
 
         $recalmationsEvents = new Event(
-            $r->getDate(),
-            $r->getIntitule()
+    
+            $r->getIntitule(),
+            $r->getDate()
             
         );
     

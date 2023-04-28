@@ -11,27 +11,36 @@ use App\Entity\Avis;
 use App\Form\AvisType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\AvisRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use App\Service\Mailer;
 
 
 class AvisController extends AbstractController
 {
     #[Route('/avis', name: 'app_avis')]
-    public function index(Request $request,ManagerRegistry $doctrine,AvisRepository $avisRepository): Response
+    public function index(Request $request,ManagerRegistry $doctrine,AvisRepository $avisRepository ,PaginatorInterface $paginator): Response
     {
         $repo = $doctrine->getRepository(Avis::class);
         $Avis = $repo->findAll();
         $nombreAvis = $avisRepository->countAvis();
+        $pagination = $paginator->paginate(
+            $Avis,
+            $request->query->getInt('page', 1),
+            5
+        );
 
     
         return $this->render('avis/index.html.twig', [
             'controller_name' => 'AvisController',
             'Avis' => $Avis,
-            'nombreAvis' => $nombreAvis
+            'nombreAvis' => $nombreAvis,
+            'pagination' => $pagination,
         ]);
     }
 
     #[Route('/addavis', name: 'add_avis')]
-    public function add(Request $request, EntityManagerInterface $entityManager): Response
+    public function add(Request $request, EntityManagerInterface $entityManager, Mailer $mailer,MailerInterface $mailer1): Response
     {
         $avis = new Avis();
         $form = $this->createForm(AvisType::class, $avis);
@@ -40,6 +49,9 @@ class AvisController extends AbstractController
            
             $entityManager->persist($avis);
             $entityManager->flush();
+
+            $mailer->sendEmail('niheleeroui124@gmail.com',"niheleeroui124@gmail.com", 'Nouveau avis', 'Un nouveau avis a été ajouté.',$mailer1);
+            
             return $this->redirectToRoute('app_avis');
         }
         return $this->render('avis/add.html.twig', [

@@ -29,6 +29,7 @@
                                 <div class="table-responsive" >
                                 
                                     <table class="table table-striped">
+                                    {{ knp_pagination_render(pagination) }}
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -39,7 +40,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                         {% for a in Avis %}
+                                         {% for a in pagination %}
                                             <tr>
                                                 <td>{{ a.id }}</td>
                                                 <td class="card-text">{{ a.commenraire|slice(0, 50) ~ (a.commenraire|length > 50 ? '...' : '') }}</td>
