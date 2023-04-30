@@ -35,7 +35,7 @@ class Bien
     private ?\DateTime $dated=null;
     
 
-    #[ORM\Column(length: 12)]
+    #[ORM\Column(length: 8)]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
     private ?string $num=null;
 

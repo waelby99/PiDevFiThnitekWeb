@@ -54,9 +54,7 @@ class Offrecovoiturage
     private ?string $lieua=null;
 
     #[ORM\Column(length: 20)]
-    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
-    #[Choice(choices: ["oui", "non"], message: "Le champ doit être soit 'oui' ou 'non'.")]
-    private ?string $dispo=null;
+    private ?bool $dispo=false;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
@@ -141,7 +139,7 @@ class Offrecovoiturage
         return $this;
     }
 
-    public function getDispo(): ?string
+    /*public function getDispo(): ?string
     {
         return $this->dispo;
     }
@@ -151,6 +149,17 @@ class Offrecovoiturage
         $this->dispo = $dispo;
 
         return $this;
+    }*/
+    public function setDispo(?bool $dispo): self
+    {
+        $this->dispo = $dispo;
+
+        return $this;
+    }
+
+    public function getDispo(): ?bool
+    {
+        return $this->dispo;
     }
 
     public function getNbplace(): ?int
