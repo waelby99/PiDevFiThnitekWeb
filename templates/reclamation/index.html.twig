@@ -21,7 +21,7 @@
               
             </div>
 
-            <div class="col-sm-4" style=" width:350px; margin-top:20px;">
+            <div class="col-sm-4" style=" width:350px; margin-top:20px">
               <form action="{{ path('tri_intitule') }}" method="get" class="form-group">
               <select name="sort" class="form-control" onchange="this.form.submit()">
                 <option value="asc">Tri par ordre alphabétique ascendant</option>
@@ -29,7 +29,7 @@
               </select>
               </form>
             </div>
-
+             
         </center>
           
 
@@ -40,7 +40,7 @@
 
                                 
                                 <div class="table-responsive" >
-                                {{ knp_pagination_render(pagination) }}
+                                {{ knp_pagination_render(pagination, '', {'template': 'pagination.html.twig'}) }}
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>

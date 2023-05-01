@@ -94,7 +94,7 @@ class AvisController extends AbstractController
     }
 
     #[Route('/searchAvis', name: 'search_avis')]
-    public function search(Request $request, ManagerRegistry $doctrine): Response
+    public function search(Request $request, ManagerRegistry $doctrine, AvisRepository $avisRepository ,PaginatorInterface $paginator): Response
     {
          $repo = $doctrine->getRepository(Avis::class);
          $query = $request->query->get('query');
@@ -103,10 +103,18 @@ class AvisController extends AbstractController
            $Avis = $repo->findAll();
         } else {
            $Avis = $repo->searchByQuery($query);
+           $nombreAvis = $avisRepository->countAvis();
+           $pagination = $paginator->paginate(
+            $Avis,
+            $request->query->getInt('page', 1),
+            5
+        );
     }
     return $this->render('avis/index.html.twig', [
         'controller_name' => 'AvisController',
-        'Avis'=>$Avis
+        'Avis'=>$Avis,
+        'nombreAvis' => $nombreAvis,
+        'pagination' => $pagination,
     ]);
    }
 
