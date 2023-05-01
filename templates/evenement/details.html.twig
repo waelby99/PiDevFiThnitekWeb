@@ -5,9 +5,33 @@
                 <div class="row">
                         <div class="col-12">
                                 <div class="card">
+                                        <div class="card-header">
+                                               <div class="float-left">{#  {% if weather %}
+                                                        {% for weatherItem in weather %}
+                                                                <p> {{ weatherItem.main }}</p>
+                                                                <p> {{ weatherItem.description }}</p>
+                                                                <img src="{{ asset('http://openweathermap.org/img/w/' ~ weatherItem.icon ~ '.png') }}" height="100px" width="100px">
+                                                        {% endfor %}
+                                                {% else %}
+                                                        <p>No weather information available.</p>
+                                                {% endif %}#}
+
+
+                                               </div>
+                                        </div>
                                         <div class="card-body">
 
                                                 <h5 style="color: #76838f;">
+                                                        {% if weather_data.weather[0].icon is defined %}
+                                                                <img src="{{ 'https://openweathermap.org/img/w/' ~ weather_data.weather[0].icon ~ '.png' }}" alt="Weather Icon">
+                                                        {% endif %}
+
+                                                        <p>Température : {{ weather_data.main.temp  }} °C</p>
+
+                                                        {% if weather_data.wind.speed is defined %}
+                                                                <p>Vitesse de l'air : {{ weather_data.wind.speed }} m/s</p>
+                                                        {% endif %}
+
                                                         <ul><li>L'événement : {{ events.titre }}</li><br>
                                                                 <li>Lieu : {{ events.lieu}}</li><br>
                                                                 <li> La date :{{ events.date.format('Y-m-d')}} </li><br>

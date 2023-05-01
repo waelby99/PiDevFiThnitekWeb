@@ -16,6 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Relation1;
 use App\Form\Relation1Type;
 use Symfony\Component\Serializer\SerializerInterface;
+use Pyrrah\OpenWeatherMapBundle\Services\Client;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+
 
 class EvenementController extends AbstractController
 {
@@ -68,9 +72,20 @@ class EvenementController extends AbstractController
         ]);
     }
     #[Route('/evenementdetail/{id}', name: 'detail_event')]
-    public function detail(Request $request,$id,ManagerRegistry $doctrine,EntityManagerInterface $entityManager): Response
+    public function detail(HttpClientInterface $httpClient,Request $request,$id,ManagerRegistry $doctrine,EntityManagerInterface $entityManager,Client $client,SerializerInterface $serializer): Response
     {
         $evenement =  $doctrine->getRepository(Evenement::class)->find($id);
+        $ville = $evenement->getLieu();
+        $response = $client->getWeather($ville);
+        //$response = $client->query('weather', array('q' => 'Paris,fr'));
+        $weatherData = json_decode(json_encode($response), true);
+        $weather = $weatherData['weather'];
+        $response1 = $httpClient->request('GET', 'http://api.openweathermap.org/data/2.5/weather?q='.$ville.'&appid=5b491eb9b69dd529d5cb765278c52609&units=metric&lang=fr');
+        $content1 = $response1->getContent();
+        $weatherData1 = json_decode($content1, true);
+        $weather1 = $weatherData1['weather'];
+
+        $json = $serializer->serialize($weather, 'json');
         $sponsors = $doctrine->getRepository(Evenement::class)->getSponsorByEvenementId($entityManager, $id);
         $relation = new Relation1();
         $form = $this->createForm(Relation1Type::class, $relation);
@@ -85,6 +100,8 @@ class EvenementController extends AbstractController
             'controller_name' => 'EvenementController',
             'events'=>$evenement,
           'sponsors'=>$sponsors,
+          'weather' => $weather,
+          'weather_data' => $weatherData1,
           'form'=>$form->createView()
       ]);
     }
@@ -110,4 +127,16 @@ class EvenementController extends AbstractController
         $json = $serializer->serialize($events, 'json');
         return new JsonResponse($json);
     }
+    #[Route('/trieventa', name:'trieventa')]
+    public function triera(Request $request, EvenementRepository $er, SerializerInterface $serializer)
+    {
+        $events = $er->findByParticipantsA();
+        $json = $serializer->serialize($events, 'json');
+        return new JsonResponse($json);
+    }
+    /*public function details(HttpClientInterface $httpClient, SerializerInterface $serializer, $id)
+    {
+        $response = $httpClient->request('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Paris&appid=your_api_key');
+        return new JsonResponse($json);
+    }*/
 }

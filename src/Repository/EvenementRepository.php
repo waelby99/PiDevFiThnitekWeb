@@ -60,6 +60,13 @@ class EvenementRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findByParticipantsA():array
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.nbparticipants', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Evenement[] Returns an array of Evenement objects
 //     */

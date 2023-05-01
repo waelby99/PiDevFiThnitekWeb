@@ -40,13 +40,21 @@
                         </tbody>
 
                     </table>
-                </div>
+
+                   <!-- <canvas id="myChart" width="400" height="400"></canvas>-->
+                    <a href="{{ path('generate_pdf') }}" target="_blank">Générer le PDF</a><br>
+                    <a href="{{ path('generate_csv') }}" target="_blank">Générer le fichier CSV</a>
+                    </div>
             </div>
         </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+
     <script>
+        /*var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {{ chart|json_encode|raw }});*/
         function searchTable() {
             var query = document.getElementById("searchInput").value;
             $.ajax({
