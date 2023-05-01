@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Evenement;
-use App\Entity\Sponsoring;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -54,6 +53,20 @@ class EvenementRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function findByParticipants():array
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.nbparticipants', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findByParticipantsA():array
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.nbparticipants', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Evenement[] Returns an array of Evenement objects
 //     */

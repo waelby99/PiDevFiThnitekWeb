@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Sponsoring;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
