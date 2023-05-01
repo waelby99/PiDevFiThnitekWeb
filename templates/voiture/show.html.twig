@@ -42,20 +42,6 @@
                     <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-email"></i> <span>Réclamations</span></a></li>
                     <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-pen"></i> <span>Questions</span></a></li>
                     <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-settings"></i> <span>Paramètres</span></a></li>
-                        <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-                                <i class="mdi mdi-bell-outline"></i>
-
-                            </a>
-                            <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
-                                <div class="dropdown-content-heading d-flex justify-content-between">
-                                    <span class="">2 New Notifications</span>
-
-                                </div>
-                                <div class="dropdown-content-body">
-                                </div>
-                            </div>
-                        </li>
-
                     <li style="display: inline;"><a href=""><i class="icon-key"></i> <span>Logout</span></a></li>
                     </ul>
                 </div>
@@ -67,6 +53,56 @@
    {% block content %}
 <!-- l code mteeekom lena -->
 
+
+  
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="text-center">Voiture</h1>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                   
+                       
+                        <tr>
+                            <th>Matricule</th>
+                            <td>{{ voiture.matricule }}</td>
+                        </tr>
+                        <tr>
+                            <th>Puissance</th>
+                            <td>{{ voiture.puissance }}</td>
+                        </tr>
+                        <tr>
+                            <th>Kilometrage</th>
+                            <td>{{ voiture.kilometrage }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nbplaces</th>
+                            <td>{{ voiture.nbplaces }}</td>
+                        </tr>
+                        <tr>
+                            <th>Dateassurance</th>
+                            <td>{{ voiture.dateassurance ? voiture.dateassurance|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Datedvidange</th>
+                            <td>{{ voiture.datedvidange ? voiture.datedvidange|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Color</th>
+                            <td>{{ voiture.color }}</td>
+                        </tr>
+                        <tr>
+                            <th>Marque</th>
+                            <td>{{ voiture.marque }}</td>
+                        </tr>
+                    
+                </table>
+
+                   <br><br><a href='{{path('app_voiture_index')}}' class="btn mb-1 btn-warning" style="color:white"></i><span> retour a la liste </span></a>
+            </div>
+        </div>
+    </div>
 
 
    {% endblock %}

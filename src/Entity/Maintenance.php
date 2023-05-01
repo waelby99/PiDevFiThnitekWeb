@@ -12,73 +12,69 @@ class Maintenance
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $idMaintenance= null;
-    
-    #[ORM\Column(length: 50)]
-    private ?string $matricule=null;
+    public ?int $id_maintenance= null;
     
 
-    #[ORM\Column(length:20)]
-    private ?\DateTime $datedassurance=null;
+    
 
-    #[ORM\Column(length:20)]
-    private ?\DateTime $datepassurance=null;
 
-    #[ORM\Column(length:20)]
-    private ?\DateTime $datedvidange=null;
+    #[ORM\Column(name: "dateDAssurance" )]
+    private ?\DateTime $dateDAssurance=null;
+
+    #[ORM\Column(name: "datePAssurance")]
+    private ?\DateTime $datePAssurance=null;
+
+    #[ORM\Column(name: "dateDVidange")]
+    private ?\DateTime $dateDVidange=null;
 
     #[ORM\Column]
     private ?int $restekilometre=null;
 
+    #[ORM\ManyToOne(inversedBy:'maintenance')]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[ORM\JoinColumn(name: 'idVoi')]
+    private ?Voiture $idVoi = null;
     public function getIdMaintenance(): ?int
     {
-        return $this->idMaintenance;
+        return $this->id_maintenance;
     }
 
-    public function getMatricule(): ?string
-    {
-        return $this->matricule;
-    }
 
-    public function setMatricule(string $matricule): self
-    {
-        $this->matricule = $matricule;
-
-        return $this;
-    }
 
     public function getDatedassurance(): ?\DateTime
     {
-        return $this->datedassurance;
+        return $this->dateDAssurance;
     }
 
     public function setDatedassurance(\DateTime $datedassurance): self
     {
-        $this->datedassurance = $datedassurance;
+        $this->dateDAssurance = $datedassurance;
 
         return $this;
     }
 
+
+
     public function getDatepassurance(): ?\DateTime
     {
-        return $this->datepassurance;
+        return $this->datePAssurance;
     }
 
     public function setDatepassurance(\DateTime $datepassurance): self
     {
-        $this->datepassurance = $datepassurance;
+        $this->datePAssurance = $datepassurance;
 
         return $this;
     }
 
     public function getDatedvidange(): ?\DateTime
     {
-        return $this->datedvidange;
+        return $this->dateDVidange;
     }
 
     public function setDatedvidange(\DateTime $datedvidange): self
     {
-        $this->datedvidange = $datedvidange;
+        $this->dateDVidange = $datedvidange;
 
         return $this;
     }
@@ -91,6 +87,19 @@ class Maintenance
     public function setRestekilometre(int $restekilometre): self
     {
         $this->restekilometre = $restekilometre;
+
+        return $this;
+    }
+
+
+    public function getIdVoi(): ?Voiture
+    {
+        return $this->idVoi;
+    }
+
+    public function setIdVoi(?Voiture $idVoi): self
+    {
+        $this->idVoi = $idVoi;
 
         return $this;
     }

@@ -9554,6 +9554,9 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 .error-bg {
   background: #AFB4C5; }
 
+.same-date {
+  background-color: #ffc107;
+}
 .error-text {
   font-size: 5rem;
   line-height: 5rem; }
