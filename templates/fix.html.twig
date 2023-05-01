@@ -1,0 +1,95 @@
+
+<head>
+{% block head%}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Fithnitek</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/b.png')}}">
+    <!-- Pignose Calender -->
+    <link href="{{asset('./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet')}}">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="{{asset('./plugins/chartist/css/chartist.min.css')}}">
+    <link rel="stylesheet" href="{{asset('./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css')}}">
+    <!-- Custom Stylesheet -->
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+{% endblock %}
+</head>
+<body>
+{% block body%}
+<div id="main-wrapper">
+<div class="nav-header">
+    <a href=""> 
+        <img src="{{asset('images/a.png')}}" width="125px">
+    </a>
+</div>
+<div class="header">    
+            <div class="header-content clearfix" style="padding-top:25px">     
+                <div class="header-left">
+                    <ul class="clearfix" style=" display: inline;">
+                    <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-check"></i> <span>Sponsors</span></a></li>
+                    <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-car"></i> <span>Voitures</span></a></li>
+                    <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-wrench"></i> <span>Maintenances</span></a></li>                    
+                    <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-bus"></i> <span>Covoiturages</span></a></li>
+                    <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-email"></i> <span>Réclamations</span></a></li>
+                    <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-pen"></i> <span>Questions</span></a></li>
+                    <li style="display: inline;margin-right:15px"><a href=""><i class="mdi mdi-settings"></i> <span>Paramètres</span></a></li>
+                    <li style="display: inline;margin-right:15px"><a href="{{ path('app_logout') }}"><i class="icon-key"></i> <span>Logout</span></a></li>
+                    
+                     
+                    <li style="display: inline;margin-right:15px">
+
+                            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                <img src="assets/img/profile-img.jpg" alt="" class="rounded-circle">
+                             {% if app.user !=null %}
+
+                                 <span class="d-none d-md-block dropdown-toggle ps-2">{{ app.user.username }}</span>
+                                {% endif %}
+                          </li>      
+                    
+                    </ul>
+                </div>
+                
+            </div>
+            
+        </div>
+   {% endblock %}
+   {% block content %}
+<!-- l code mteeekom lena -->
+
+
+
+   {% endblock %}
+   <body>
+    <footer>
+    {% block footer %}
+    <div class="footer" style="position: fixed;bottom: 0;width:100%;">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">TechLeaders</a> 2023</p>
+            </div>
+        </div>
+<div>
+{% endblock %}
+        <script src="{{asset('./js/dashboard/dashboard-1.js')}}"></script>
+        <script src="{{asset('plugins/common/common.min.js')}}"></script>
+        <script src="{{asset('js/custom.min.js')}}"></script>
+        <script src="{{asset('js/settings.js')}}"></script>
+        <script src="{{asset('js/gleek.js')}}"></script>
+        <script src="{{asset('js/styleSwitcher.js')}}"></script>
+
+        <script src="{{asset('./plugins/chart.js/Chart.bundle.min.js')}}"></script>
+    
+        <script src="{{asset('./plugins/circle-progress/circle-progress.min.js')}}"></script>
+    
+        <script src="{{asset('./plugins/d3v3/index.js')}}"></script>
+        <script src="{{asset('./plugins/topojson/topojson.min.js')}}"></script>
+        <script src="{{asset('./plugins/datamaps/datamaps.world.min.js')}}"></script>
+    
+        <script src="{{asset('./plugins/raphael/raphael.min.js')}}"></script>
+        <script src="{{asset('./plugins/morris/morris.min.js')}}"></script>
+        <script src="{{asset('./plugins/moment/moment.min.js')}}"></script>
+        <script src="{{asset('./plugins/pg-calendar/js/pignose.calendar.min.js')}}"></script>
+    
+        <script src="{{asset('./plugins/chartist/js/chartist.min.js')}}"></script>
+        <script src="{{asset('./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js')}}"></script>
