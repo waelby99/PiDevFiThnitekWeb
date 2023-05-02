@@ -39,22 +39,14 @@ class Offrecovoiturage
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
-    #[Assert\Regex(
-        pattern: '/^[a-zA-Z0-9]+$/',
-        message: "Le champ ne peut contenir que des lettres ou des chiffres."
-    )]
     private ?string $lieud=null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
-    #[Assert\Regex(
-        pattern: '/^[a-zA-Z0-9]+$/',
-        message: "Le champ ne peut contenir que des lettres ou des chiffres."
-    )]
     private ?string $lieua=null;
 
     #[ORM\Column(length: 20)]
-    private ?bool $dispo=false;
+    private ?string $dispo=null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
@@ -139,7 +131,7 @@ class Offrecovoiturage
         return $this;
     }
 
-    /*public function getDispo(): ?string
+    public function getDispo(): ?string
     {
         return $this->dispo;
     }
@@ -149,8 +141,8 @@ class Offrecovoiturage
         $this->dispo = $dispo;
 
         return $this;
-    }*/
-    public function setDispo(?bool $dispo): self
+    }
+    /*public function setDispo(?bool $dispo): self
     {
         $this->dispo = $dispo;
 
@@ -160,7 +152,7 @@ class Offrecovoiturage
     public function getDispo(): ?bool
     {
         return $this->dispo;
-    }
+    }*/
 
     public function getNbplace(): ?int
     {

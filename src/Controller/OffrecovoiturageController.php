@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Geocoder\Exception\Exception;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\GeocodeQueryBuilder;
 
 #[Route('/offrecovoiturage')]
 class OffrecovoiturageController extends AbstractController

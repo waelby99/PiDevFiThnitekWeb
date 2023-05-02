@@ -16,18 +16,10 @@ class Bien
     
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
-    #[Assert\Regex(
-        pattern: '/^[a-zA-Z0-9]+$/',
-        message: "Le champ ne peut contenir que des lettres ou des chiffres."
-    )]
     private ?string $lieud=null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
-    #[Assert\Regex(
-        pattern: '/^[a-zA-Z0-9]+$/',
-        message: "Le champ ne peut contenir que des lettres ou des chiffres."
-    )]
     private ?string $lieua=null;
 
     #[ORM\Column(length:20)]
