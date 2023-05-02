@@ -1,20 +1,29 @@
-{% extends "fix.html.twig" %}
+{% extends "fixadmin.html.twig" %}
 {% block content %}
     <div class="container-fluid">
         <center style="margin-top:20px;margin-bottom:20px"><h3 class="d-inline" style="color:#7571f9;">Détails sur cet événement</h3></center>
         <div class="row">
+            <!--<a href="">generate pdf</a>-->
             <div class="col-12">
                 <div class="card">
+                    <div class="card-header text-center" id="gold" style="color:goldenrod" hidden>
+                        <span class="display-5"><i class="icon-diamond gradient-4-text"></i></span>
+                        <h5>Ce sponsor est prviligé</h5>
+                    </div>
                     <div class="card-body">
-
-                        <h5 style="color: #76838f;">Le Sponsor : {{ sponsor.sponsor }}, L'adresse : {{ sponsor.adresse}}, L'email' :{{ sponsor.email}}, le montant : {{ sponsor.montant }}DT et la date de signature {{ sponsor.dateSignature.format('Y-m-d') }}</h5>
-
+                        <ul>
+                        <h5 style="color: #76838f;"><li>Le Sponsor : {{ sponsor.sponsor }}</li><br>
+                               <li> L'adresse : {{ sponsor.adresse}}</li><br>
+                            <li>L'email' :{{ sponsor.email}}</li><br>
+                           <li> le montant : {{ sponsor.montant }}DT </li> <br>
+                           <li> Date de signature {{ sponsor.dateSignature.format('Y-m-d') }}</li></h5>
+                        </ul>
                         <h4 class="card-title">Les événements de ce sponsor : </h4>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered zero-configuration">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+
                                     <th>Titre L'événement</th>
                                     <th>Lieu</th>
                                     <th>Description</th>
@@ -25,7 +34,7 @@
                                 <tbody>
                                 {% for e in events %}
                                     <tr>
-                                        <td>{{ e.id }}</td>
+
                                         <td>{{ e.titre }}</td>
                                         <td>{{ e.lieu }}</td>
                                         <td>{{ e.description }}</td>
@@ -43,7 +52,14 @@
     </div>
 
     <br>
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+    var numEvents = $("table tbody tr").length;
+    if (numEvents >= 5) {
+    $("#gold").prop('hidden',false);
+    }
+    });
+    </script>
 
 {% endblock %}

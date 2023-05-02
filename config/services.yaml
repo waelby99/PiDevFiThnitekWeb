@@ -30,3 +30,10 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    pyrrah.openweathermap.client:
+        class: Pyrrah\OpenWeatherMapBundle\Services\Client
+        arguments:
+            $apiKey: '5b491eb9b69dd529d5cb765278c52609'
+
+    Pyrrah\OpenWeatherMapBundle\Services\Client:
+        alias: pyrrah.openweathermap.client
