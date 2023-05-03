@@ -1,0 +1,273 @@
+<head>
+    {% block head%}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Fithnitek</title>
+        <!-- Favicon icon -->
+        <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/b.png')}}">
+        <!-- Pignose Calender -->
+        <link href="{{asset('./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet')}}">
+        <!-- Chartist -->
+        <link rel="stylesheet" href="{{asset('./plugins/chartist/css/chartist.min.css')}}">
+        <link rel="stylesheet" href="{{asset('./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css')}}">
+        <!-- Custom Stylesheet -->
+        <link href="{{asset('./plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+        <link href="{{asset('css/style.css')}}" rel="stylesheet">
+        <link rel="stylesheet" href="{{asset('./plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+        <!-- Daterange picker plugins css -->
+        <link rel="stylesheet" href="{{asset('./plugins/timepicker/bootstrap-timepicker.min.css')}}">
+        <link href="{{asset('./plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
+        <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css')}}" rel="stylesheet"/>
+    {% endblock %}
+</head>
+<body>
+{% block body%}
+<div id="main-wrapper">
+    <div class="nav-header">
+        <a href="">
+            <img src="{{asset('images/a.png')}}" width="125px">
+        </a>
+    </div>
+    <div class="header">
+        <div class="header-content clearfix" style="padding-top:25px">
+            <div class="header-left">
+<h1>Partie Admin</h1>
+ <li>
+                    <a href="{{path('app_statistique')}}" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Statistique utilisateurs</span>
+                    </a>
+
+                </li>
+                 <li>
+                    <a href="{{path('app_maps')}}" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Position utilisateurs</span>
+                    </a>
+
+                </li>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="nk-sidebar">
+        <div class="nk-nav-scroll">
+            <ul class="metismenu" id="menu">
+
+                <li>
+                    <a href="" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Evénement</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Sponsor</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="{{path('app_user')}}" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Liste des utilisateurs</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Agence d'assurance</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Réclamations</span>
+                    </a>
+
+                </li><li>
+                    <a href="" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Offre Covoiturage </span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Biens</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Sondages</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Questions</span>
+                    </a>
+
+                </li>
+                <li style="display: inline;margin-right:15px"> <a class="dropdown-item d-flex align-items-center" href="{{ path('app_logout') }}"><i class="icon-key"></i> <span>Logout</span></a></li>
+            </ul>
+        </div>
+    </div>
+    {% endblock %}
+    <div class="content-body">
+    {% block content %}
+        <!-- l code mteeekom lena -->
+        {% block title %}User{% endblock %}
+<div class="card">
+                <div class="card-body">
+                
+                
+{% block scripts %}
+         <div class="dash-app">
+            <header class="dash-toolbar">
+                <a href="#!" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </a>
+
+
+                <section class="s-crossfit">
+                    <div class="container">
+
+                        <div class="sidebar-search">
+
+                            <div class="input-group custom-search-form">
+
+                                <input type="text" id="search" class="form-control" placeholder="Recherche">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+
+                        <div class="row" id="search">
+
+                        </div>
+
+                    </div>
+                </section>
+                <script src="{{ asset('assets/js/jquery.js') }}"></script>
+                <script
+                        src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js')}}">
+                </script>
+                <script>
+                    $( document ).ready(function() {
+                        var currentRequest = null;
+                        $("#search").keyup(function(e){
+                            /* La variable value va prendre la valeur insérer dans le champ de texte
+                            afin d’effectuer la recherche */
+                            var value = $(this).val();
+                            if(currentRequest != null) {
+                                currentRequest.abort();
+                            }
+                            /* Ajax est lancé lors du remplissage du champ texte dont l’id est
+                            « search » pour faire la recherche */
+                            currentRequest = $.ajax({
+                                url : "{{ path('userajax') }}",
+                                type : 'GET',
+                                data: {
+                                    'searchValue' : value
+                                },
+                                success : function(retour)
+                                {
+                                    $('#all').html(retour);
+                                },
+                            });
+                            return false;
+                        });
+                    });
+                </script>
+    {% endblock %}
+    <h1>Liste des utilisateurs</h1>
+
+    <table class="table table-striped">
+                    <thead>
+                    <tr>     
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Roles</th>
+                        <th>Age</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            
+                            <td>{{ user.nom }}</td>
+                            <td>{{ user.prenom }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.password}}</td>
+                            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                            <td>{{ user.age}}</td>
+                            
+                           
+                            <td>
+                                <a class="btn btn-danger" href="{{ path('remove_user',{'id':user.id}) }}">Supprimer</a>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+                <td>
+                                <a class="btn btn-danger" href="{{ path('admin') }}">Go back</a>
+                            </td>
+
+    
+
+
+
+
+    {% endblock %}
+    </div>
+</body>
+<footer>
+    {% block footer %}
+    <div class="footer" style="position: fixed;bottom: 0;width:100%;">
+        <div class="copyright">
+            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">TechLeaders</a> 2023</p>
+        </div>
+    </div>
+    <div>
+        {% endblock %}
+        <script src="{{asset('./js/dashboard/dashboard-1.js')}}"></script>
+        <script src="{{asset('plugins/common/common.min.js')}}"></script>
+        <script src="{{asset('js/custom.min.js')}}"></script>
+        <script src="{{asset('js/settings.js')}}"></script>
+        <script src="{{asset('js/gleek.js')}}"></script>
+        <script src="{{asset('js/styleSwitcher.js')}}"></script>
+
+        <script src="{{asset('./plugins/chart.js/Chart.bundle.min.js')}}"></script>
+
+        <script src="{{asset('./plugins/circle-progress/circle-progress.min.js')}}"></script>
+
+        <script src="{{asset('./plugins/d3v3/index.js')}}"></script>
+        <script src="{{asset('./plugins/topojson/topojson.min.js')}}"></script>
+        <script src="{{asset('./plugins/datamaps/datamaps.world.min.js')}}"></script>
+
+        <script src="{{asset('./plugins/raphael/raphael.min.js')}}"></script>
+        <script src="{{asset('./plugins/morris/morris.min.js')}}"></script>
+        <script src="{{asset('./plugins/moment/moment.min.js')}}"></script>
+        <script src="{{asset('./plugins/pg-calendar/js/pignose.calendar.min.js')}}"></script>
+
+        <script src="{{asset('./plugins/chartist/js/chartist.min.js')}}"></script>
+        <script src="{{asset('./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js')}}"></script>
+        <script src="{{asset('./plugins/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+        <!-- Date range Plugin JavaScript -->
+        <script src="{{asset('./plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+        <script src="{{asset('./plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+
+        <script src="{{asset('./js/plugins-init/form-pickers-init.js')}}"></script>
+        <script src="{{asset('plugins/common/common.min.js')}}"></script>
+        <script src="{{asset('js/custom.min.js')}}"></script>
+        <script src="{{asset('js/settings.js')}}"></script>
+        <script src="{{asset('js/gleek.js')}}"></script>
+        <script src="{{asset('js/styleSwitcher.js')}}"></script>
+        <script src="{{asset('./plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+cdnjs.cloudflare.com

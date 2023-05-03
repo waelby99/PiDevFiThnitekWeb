@@ -20,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class SponsorController extends AbstractController
@@ -29,6 +30,7 @@ class SponsorController extends AbstractController
 // ...
 
 #[Route('/sponsor', name: 'app_sponsor')]
+#[Security('is_granted("ROLE_ADMIN")')]
     public function index(ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder): Response
     {
         $sponsors = $doctrine->getRepository(Sponsoring::class)->findAll();
@@ -66,6 +68,7 @@ class SponsorController extends AbstractController
     }
 
     #[Route('/deletesponsor/{id}', name: 'delete_sponsor')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function deleteSponsor($id,ManagerRegistry $doctrine){
         $sponsor=$doctrine->getRepository(Sponsoring::class)->find($id);
         $em=$doctrine->getManager();
@@ -74,6 +77,7 @@ class SponsorController extends AbstractController
         return $this->redirectToRoute('app_sponsor');
     }
     #[Route('/addsponsor', name: 'add_sponsor')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function add(Request $request, EntityManagerInterface $entityManager,MailerInterface $mailer): Response
     {
         $sponsor = new Sponsoring();
@@ -107,6 +111,7 @@ class SponsorController extends AbstractController
         ]);
     }
     #[Route('/modifSponsor/{id}', name: 'modif_sponsor')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function modif($id,Request $request, EntityManagerInterface $entityManager,ManagerRegistry $doctrine): Response
     {
         $sponsor =  $doctrine->getRepository(Sponsoring::class)->find($id);
@@ -122,6 +127,7 @@ class SponsorController extends AbstractController
         ]);
     }
     #[Route('/sponsordetail/{id}', name: 'detail_sponsor')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function detail($id,ManagerRegistry $doctrine,EntityManagerInterface $entityManager): Response
     {
         $sponsor =  $doctrine->getRepository(Sponsoring::class)->find($id);
@@ -157,6 +163,7 @@ class SponsorController extends AbstractController
         return new JsonResponse($json);
     }
     #[Route('/generate-pdf', name:'generate_pdf')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function generatePdf(ManagerRegistry $doctrine)
     {
 
@@ -175,6 +182,7 @@ class SponsorController extends AbstractController
         return $response;
     }
     #[Route('/generate-csv', name:'generate_csv')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function generateCsv(ManagerRegistry $doctrine)
     {
         $sponsors = $doctrine->getRepository(Sponsoring::class)->findAll();
