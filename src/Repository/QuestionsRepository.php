@@ -1,10 +1,17 @@
 <?php
 
 namespace App\Repository;
-
+use App\Entity\Sondage;
 use App\Entity\Questions;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+
+use Doctrine\Bundle\DoctrineBundle\Registry;
+
+
+
+
+
 
 /**
  * @extends ServiceEntityRepository<Questions>
@@ -21,7 +28,63 @@ class QuestionsRepository extends ServiceEntityRepository
         parent::__construct($registry, Questions::class);
     }
 
-    public function save(Questions $entity, bool $flush = false): void
+    /*public function findById($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+    
+        $query = $entityManager->createQueryBuilder()
+            ->select('a', 'c')
+            ->from('App\Entity\Questions', 'a')
+            ->join('a.sondage', 'c')
+            ->andWhere('c.sondage = :val')
+            ->setParameter('val', $id)
+            ->getQuery();
+    
+        return $query->getArrayResult();
+    }
+    public function findById($sondageId)
+    {
+        return $this->createQueryBuilder('q')
+            ->join('q.sondage', 's')
+            ->andWhere('s.sondageId = :sondageId')
+            ->setParameter('sondageId', $sondageId)
+            ->getQuery()
+            ->getResult();
+    }*/
+   
+     
+
+    public function findById($id)
+    {
+        return $this->createQueryBuilder('a')
+            -> join ('a.sondage','c')
+            ->addSelect ('c')
+            ->andWhere('c.sondageId = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
+    /*public function findById($sondageId)
+    {
+    $entityManager=$this->getEntityManager();
+    $query=$entityManager
+   ->createQuery("SELECT q FROM APP\Entity\Questions q JOIN  q.Sondage s where s.sondageId =:id")
+    ->SetParameter('id', $sondage_id);
+   
+    ->createQuery('SELECT q, s FROM App\Entity\Questions q JOIN q.sondage s WHERE s.sondage_id=:sondageId');
+
+$query->setParameter('sondageId', $sondageId);
+return $query->getResult(); 
+    
+    
+    
+    } /*
+
+
+
+
+   */ public function save(Questions $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -29,6 +92,7 @@ class QuestionsRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
 
     public function remove(Questions $entity, bool $flush = false): void
     {
@@ -38,6 +102,7 @@ class QuestionsRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+   
 
 //    /**
 //     * @return Questions[] Returns an array of Questions objects

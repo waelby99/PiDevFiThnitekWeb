@@ -50,7 +50,7 @@
                 console.log(today > dateFin1);
                 if (today > dateFin1) {
                     $(this).find(".btn-warning").remove();
-                    $(this).find(".card-body").css("background-color", "navy");
+                    $(this).find(".card-body").css("background-color", "#cddaff");
                     $(this).find(".card-body .p").css("color", "white");
                 }
             });
@@ -79,7 +79,7 @@
                             "</p><p class=\'card-text d-inline\'><small class=\'text-muted\'>Nombre de participants :" + s.nbparticipants + "" +
                             "</small><br><p class=\'card-text d-inline\'><small class=\'text-muted\'>Date d'événement :" + dated + "" +
                             "</small></p><br><p class=\'card-text d-inline\' id=\'datefin\'><small class=\'text-muted\'>Date fin d'événement :" + datef + "" +
-                            "</small></p><br><br><a href=\'#\' class=\'btn mb-1 btn-info float-left\' style=\'color:white;width:150px\'><i class=\'mdi mdi-information\'></i><span> Détails</span></a>" ;
+                            "</small></p><br><br><a href=\'#\' class=\'btn mb-1 btn-info float-left\' style=\'color:white;\'><i class=\'mdi mdi-information\'></i><span> Détails</span></a>" ;
                     }
                     $(".row").html(eventsHtml);
                     checkDateFin();

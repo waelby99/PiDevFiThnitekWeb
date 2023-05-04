@@ -38,6 +38,17 @@ class VoitureRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findAllMatricules(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('v')
+            ->select('v.matricule')
+            ->orderBy('v.matricule', 'ASC')
+            ->getQuery();
+
+        $results = $queryBuilder->getResult();
+
+        return array_column($results, 'matricule');
+    }
 
 //    /**
 //     * @return Voiture[] Returns an array of Voiture objects

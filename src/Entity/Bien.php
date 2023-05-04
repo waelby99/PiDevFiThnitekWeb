@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BienRepository;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: BienRepository::class)]
 class Bien
 {
@@ -15,19 +15,24 @@ class Bien
 
     
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
     private ?string $lieud=null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
     private ?string $lieua=null;
 
     #[ORM\Column(length:20)]
+    #[Assert\GreaterThan("today", message: "La date de covoiturage ne doit pas être inférieure à la date d'aujourd'hui.")]
     private ?\DateTime $dated=null;
     
 
-    #[ORM\Column(length: 12)]
+    #[ORM\Column(length: 8)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
     private ?string $num=null;
 
     #[ORM\ManyToOne(inversedBy:'biens')]
+    #[ORM\JoinColumn(name: 'idUser')]
     private ?User $iduser = null;
 
     public function getId(): ?int

@@ -19,8 +19,12 @@ class Réponses
     #[ORM\ManyToOne(inversedBy:'reponses')]
     private ?User $iduser = null;
 
-    #[ORM\ManyToOne(inversedBy:'reponsess')]
+
+    #[ORM\ManyToOne(inversedBy: 'reponsess')]
+    #[ORM\JoinColumn(name :'questionId', referencedColumnName :'questionId')]
     private ?Questions $question = null;
+
+   
 
     public function getRéponsesId(): ?int
     {

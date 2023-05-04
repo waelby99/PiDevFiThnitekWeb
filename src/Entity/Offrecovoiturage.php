@@ -4,8 +4,10 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\OffrecovoiturageRepository;
+use Symfony\Component\Validator\Constraints\Choice;
+
 
 #[ORM\Entity(repositoryClass: OffrecovoiturageRepository::class)]
 class Offrecovoiturage
@@ -16,30 +18,48 @@ class Offrecovoiturage
     private ?int $id= null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z0-9]+$/',
+        message: "Le champ ne peut contenir que des lettres ou des chiffres."
+    )]
     private ?string $matricule=null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z0-9]+$/',
+        message: "Le champ ne peut contenir que des lettres ou des chiffres."
+    )]
     private ?string $marque=null;
 
     #[ORM\Column(length:20)]
+    #[Assert\GreaterThan("today", message: "La date de covoiturage ne doit pas être inférieure à la date d'aujourd'hui.")]
     private ?\DateTime $dated=null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
     private ?string $lieud=null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
     private ?string $lieua=null;
 
     #[ORM\Column(length: 20)]
     private ?string $dispo=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Choice(choices: [1, 2, 3, 4], message: "Le nombre de places doit être 1, 2, 3 ou 4.")]
     private ?int $nbplace=null;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 8)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+
     private ?int $numtel=null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
     private ?float $distance=null;
 
     #[ORM\ManyToOne(inversedBy:'demandecovoiturages')]
@@ -122,6 +142,17 @@ class Offrecovoiturage
 
         return $this;
     }
+    /*public function setDispo(?bool $dispo): self
+    {
+        $this->dispo = $dispo;
+
+        return $this;
+    }
+
+    public function getDispo(): ?bool
+    {
+        return $this->dispo;
+    }*/
 
     public function getNbplace(): ?int
     {

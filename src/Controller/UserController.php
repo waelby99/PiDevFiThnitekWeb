@@ -9,10 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserController extends AbstractController
 {
     #[Route('/user', name: 'app_user')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function index(ManagerRegistry $doctrine): Response
     {
         $repo = $doctrine->getRepository(User::class);
@@ -35,6 +37,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/removeUser/{id}', name: 'remove_user')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function remove($id,ManagerRegistry $doctrine){
         $user=$doctrine->getRepository(User::class)->find($id);
         $em=$doctrine->getManager();
@@ -43,7 +46,7 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user');
     }
 
-    #[Route('/updateUser/{id}', name: 'update_user')]
+   /* #[Route('/updateUser/{id}', name: 'update_user')]
     public function edit($id,Request $request, EntityManagerInterface $entityManager,ManagerRegistry $doctrine): Response
     {
         $user =  $doctrine->getRepository(User::class)->find($id);
@@ -56,7 +59,7 @@ class UserController extends AbstractController
         return $this->render('member/edit.html.twig', [
             'form' => $form->createView()
         ]);
-    }
+    }*/
 
     /**
      * @Route("/search/back", name="userajax", methods={"GET"})

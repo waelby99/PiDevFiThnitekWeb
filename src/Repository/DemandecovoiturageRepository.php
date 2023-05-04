@@ -20,6 +20,32 @@ class DemandecovoiturageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Demandecovoiturage::class);
     }
+    
+    
+    /*public function search($lieua, $lieud, $nbplace)
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->join('r.offre', 'o');
+
+        if ($lieua) {
+            $qb->andWhere('o.lieua = :lieua')
+               ->setParameter('lieua', $lieua);
+        }
+
+        if ($lieud) {
+            $qb->andWhere('o.lieud = :lieud')
+               ->setParameter('lieud', $lieud);
+        }
+
+        if ($nbplace) {
+            $qb->andWhere('o.nbplace = :nbplace')
+               ->setParameter('nbplace', $nbplace);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+*/
+
 
     public function save(Demandecovoiturage $entity, bool $flush = false): void
     {

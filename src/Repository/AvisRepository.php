@@ -38,6 +38,45 @@ class AvisRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function searchByQuery($query)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.commenraire LIKE :query')
+            ->setParameter('query', '%'.$query.'%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function countAvis(): int
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findAllOrderByCommentaireDESC()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.commenraire', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllOrderByCommentaireASC()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.commenraire')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByCommentaireAlphabetical($order = 'ASC')
+    {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->orderBy('a.commenraire', $order);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Avis[] Returns an array of Avis objects
