@@ -18,12 +18,13 @@ use App\Form\Relation1Type;
 use Symfony\Component\Serializer\SerializerInterface;
 use Pyrrah\OpenWeatherMapBundle\Services\Client;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class EvenementController extends AbstractController
 {
     #[Route('/evenement', name: 'app_evenement')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function index(ManagerRegistry $doctrine): Response
     {
         $repo = $doctrine->getRepository(Evenement::class);
@@ -33,8 +34,20 @@ class EvenementController extends AbstractController
             'events'=>$Events
         ]);
     }
+    #[Route('/evenements', name: 'app_evenement2')]
+    #[Security('not is_granted("ROLE_ADMIN") and is_granted("ROLE_USER")')]
+    public function index1(ManagerRegistry $doctrine): Response
+    {
+        $repo = $doctrine->getRepository(Evenement::class);
+        $Events = $repo->findAll();
+        return $this->render('evenement/indexUser.html.twig', [
+            'controller_name' => 'EvenementController',
+            'events'=>$Events
+        ]);
+    }
 
     #[Route('/addevent', name: 'add_event')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
         $evenement = new Evenement();
@@ -50,6 +63,7 @@ class EvenementController extends AbstractController
         ]);
     }
     #[Route('/deleteevenement/{id}', name: 'delete_evenement')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function deleteEvenement($id,ManagerRegistry $doctrine){
         $evenement=$doctrine->getRepository(Evenement::class)->find($id);
         $em=$doctrine->getManager();
@@ -58,6 +72,7 @@ class EvenementController extends AbstractController
         return $this->redirectToRoute('app_evenement');
     }
     #[Route('/modifEvenement/{id}', name: 'modif_evenement')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function modif($id,Request $request, EntityManagerInterface $entityManager,ManagerRegistry $doctrine): Response
     {
         $evenement =  $doctrine->getRepository(Evenement::class)->find($id);
@@ -72,6 +87,7 @@ class EvenementController extends AbstractController
         ]);
     }
     #[Route('/evenementdetail/{id}', name: 'detail_event')]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function detail(HttpClientInterface $httpClient,Request $request,$id,ManagerRegistry $doctrine,EntityManagerInterface $entityManager,Client $client,SerializerInterface $serializer): Response
     {
         $evenement =  $doctrine->getRepository(Evenement::class)->find($id);
@@ -104,6 +120,41 @@ class EvenementController extends AbstractController
           'weather_data' => $weatherData1,
           'form'=>$form->createView()
       ]);
+    }
+    #[Route('/evenemetdetail/{id}', name: 'detail_event1')]
+    #[Security('not is_granted("ROLE_ADMIN") and is_granted("ROLE_USER")')]
+    public function detail1(HttpClientInterface $httpClient,Request $request,$id,ManagerRegistry $doctrine,EntityManagerInterface $entityManager,Client $client,SerializerInterface $serializer): Response
+    {
+        $evenement =  $doctrine->getRepository(Evenement::class)->find($id);
+        $ville = $evenement->getLieu();
+        $response = $client->getWeather($ville);
+        //$response = $client->query('weather', array('q' => 'Paris,fr'));
+        $weatherData = json_decode(json_encode($response), true);
+        $weather = $weatherData['weather'];
+        $response1 = $httpClient->request('GET', 'http://api.openweathermap.org/data/2.5/weather?q='.$ville.'&appid=5b491eb9b69dd529d5cb765278c52609&units=metric&lang=fr');
+        $content1 = $response1->getContent();
+        $weatherData1 = json_decode($content1, true);
+        $weather1 = $weatherData1['weather'];
+
+        $json = $serializer->serialize($weather, 'json');
+        $sponsors = $doctrine->getRepository(Evenement::class)->getSponsorByEvenementId($entityManager, $id);
+        $relation = new Relation1();
+        $form = $this->createForm(Relation1Type::class, $relation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $relation->setIdEvenement($evenement);
+            $entityManager->persist($relation);
+            $entityManager->flush();
+            return $this->redirectToRoute('detail_event', ['id' => $id]);
+        }
+        return $this->render('evenement/detailsUser.html.twig', [
+            'controller_name' => 'EvenementController',
+            'events'=>$evenement,
+            'sponsors'=>$sponsors,
+            'weather' => $weather,
+            'weather_data' => $weatherData1,
+            'form'=>$form->createView()
+        ]);
     }
     #[Route('/addspsrtoevent', name: 'add_spsr_to_event')]
     public function addsps(Request $request, EntityManagerInterface $entityManager): Response

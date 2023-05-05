@@ -10,7 +10,7 @@
 
                         <div class="card" style="margin:20px">
                             <div class="card-body">
-                                <h4 class="card-title">Basic Table</h4>
+
                                 <div class="table-responsive">
                                     <table class="table header-border">
                                         <thead>
@@ -49,9 +49,16 @@
                                                 <td>
                                                     <a class="btn btn-primary" style="margin-left:5px" href="{{path('app_offrecovoiturage_edit',{'id':o.id})}}"><i class="fa fa-pencil color-muted m-r-5"></i></a>
                                                     <a class="btn btn-primary" style="margin-left:5px" href="{{path('app_offrecovoiturage_delete',{'id':o.id})}}"><i class="fa fa-close color-danger"></i></a>
-                                                    <a class="btn btn-primary" style="margin-left:5px" href="{{path('app_offrecovoiturage_show',{'id':o.id})}}">detail</a>
-                                                    <a class="btn btn-primary" style="margin-left:5px" href="#">avis</a>
-                                                    <a class="btn btn-primary" href="#">part.</a>
+                                                    <a class="btn btn-primary" style="margin-left:5px" href="{{path('app_offrecovoiturage_show',{'id':o.id})}}"><i class="fa fa-info color-danger"></i></a>
+
+                                                    <form method="POST" action="{{ path('app_sms') }}">
+                                                        <div class="form-group">
+                                                            <label for="toPhoneNumber">Enter a phone number:</label>
+                                                            <input type="text" name="toPhoneNumber" id="toPhoneNumber" class="form-control">
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Send SMS</button>
+                                                    </form>
+                                                    <a class="btn btn-primary" style="margin-left:5px" href="{{path('app_geolocalisation')}}">localisation</a>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -62,5 +69,14 @@
                         </div>
                     </div>
                     
+
+{% endblock %}
+{% block javascripts %}
+
+    <script type="text/javascript">
+        function openScript() {
+            window.open('{{ asset('C:/Users/Nadhem/symfony projects/pidevweb/PiDevFiThnitekWeb/geolocalisation.html') }}');
+        }
+    </script>
 
 {% endblock %}
